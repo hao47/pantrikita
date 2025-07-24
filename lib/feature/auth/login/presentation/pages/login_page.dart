@@ -5,7 +5,7 @@ import 'package:pantrikita/core/theme/text_style.dart';
 import 'package:pantrikita/core/util/validator/validator.dart';
 import 'package:pantrikita/core/widgets/button.dart';
 import 'package:pantrikita/core/widgets/custom_textformfield.dart';
-import 'package:pantrikita/feature/register/presentation/pages/register_page.dart';
+import 'package:pantrikita/feature/auth/register/presentation/pages/register_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
