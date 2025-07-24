@@ -8,9 +8,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
+    return SafeArea(
+        child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -249,7 +248,7 @@ class ProfilePage extends StatelessWidget {
                 ],
               ),
 
-              const Spacer(),
+              SizedBox(height: 80),
 
               MyButton(
                 widget: Row(
@@ -273,6 +272,7 @@ class ProfilePage extends StatelessWidget {
                 isOutlined: true,
                 borderColor: ColorValue.red,
               ),
+              SizedBox(height: 40),
             ],
           ),
         ),
