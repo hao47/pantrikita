@@ -163,7 +163,7 @@ class WidgetProfileContent extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: ColorValue.silver,
+                    color: ColorValue.primaryTransparant,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: const Icon(Icons.bookmark_outline, color: ColorValue.primary),
@@ -177,7 +177,7 @@ class WidgetProfileContent extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: ColorValue.silver,
+                    color: ColorValue.primaryTransparant,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: const Icon(Icons.notifications_outlined, color: ColorValue.primary),
@@ -196,7 +196,7 @@ class WidgetProfileContent extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: ColorValue.silver,
+                    color: ColorValue.primaryTransparant,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: const Icon(Icons.edit_outlined, color: ColorValue.primary),
