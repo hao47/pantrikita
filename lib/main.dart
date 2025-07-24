@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:pantrikita/core/bloc/provider/provider.dart';
+import 'package:pantrikita/feature/pantry/presentation/pages/pantry_page.dart';
 import 'package:pantrikita/core/widgets/bottom_navigation.dart';
 import 'package:pantrikita/injection-container.dart';
 import 'core/bloc/observer/app_bloc_observer.dart';
@@ -31,11 +33,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     initializeDateFormatting('id_ID');
 
-    return MaterialApp(
-      navigatorKey: navigatorKey,
-      title: 'PantriKita',
-      debugShowCheckedModeBanner: false,
-      home: BottomNavigation(),
+    return MultiBlocProvider(
+      providers: Provider.providers(),
+      child: MaterialApp(
+        navigatorKey: navigatorKey,
+        title: 'PantriKita',
+        debugShowCheckedModeBanner: false,
+        home: PantryPage(),
+      ),
     );
   }
 }
