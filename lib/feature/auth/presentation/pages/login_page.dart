@@ -7,6 +7,7 @@ import 'package:pantrikita/core/util/validator/validator.dart';
 import 'package:pantrikita/core/widgets/bottom_navigation.dart';
 import 'package:pantrikita/core/widgets/button.dart';
 import 'package:pantrikita/core/widgets/custom_textformfield.dart';
+import 'package:pantrikita/feature/auth/presentation/pages/register_page.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../bloc/login_bloc.dart';
@@ -84,10 +85,10 @@ class LoginPage extends StatelessWidget {
                             navigatorPushAndRemove(context, BottomNavigation());
 
                           } else if (state is LoginFailure) {
-                            // showTopSnackBar(
-                            //   Overlay.of(context),
-                            //   CustomSnackBar.error(message: state.message),
-                            // );
+                            showTopSnackBar(
+                              Overlay.of(context),
+                              CustomSnackBar.error(message: state.message),
+                            );
                           }
                         },
                         builder: (context, state) {
@@ -141,7 +142,7 @@ class LoginPage extends StatelessWidget {
                           {
 
 
-                            // navigatorReplacement(context, RegisterPage())
+                            navigatorReplacement(context, RegisterPage())
 
                           },
                           child: Text(

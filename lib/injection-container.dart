@@ -14,7 +14,7 @@ import 'feature/pantry/presentation/bloc/pantry_bloc.dart';
 import 'feature/profile/data/data_sources/remote/profile_remote_data_sources.dart';
 import 'feature/profile/data/repositories/profile_repository.dart';
 import 'feature/profile/presentation/bloc/profile_bloc.dart';
-
+import 'feature/auth/presentation/bloc/register_bloc.dart';
 
 final sl = GetIt.I;
 
@@ -56,6 +56,13 @@ void _initializeAuthFeature() {
     ),
   );
 
+  // bloc
+  sl.registerFactory(
+        () => RegisterBloc(
+      repository: sl(),
+    ),
+  );
+
   // data sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
         () => AuthRemoteDataSourceImpl(
@@ -71,7 +78,6 @@ void _initializeAuthFeature() {
       localStorage: sl(),
     ),
   );
-
 }
 
 void _initializeProfileFeature() {
