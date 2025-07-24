@@ -31,7 +31,7 @@ Future<void> initializeServiceLocator() async {
   final box = GetStorage();
   sl.registerLazySingleton(() => box);
   sl.registerLazySingleton(() => http.Client());
-  sl.registerLazySingleton(() => InternetConnectionChecker);
+  sl.registerLazySingleton(() => InternetConnectionChecker.createInstance());
 }
 
 void _initializePantryFeature() {
