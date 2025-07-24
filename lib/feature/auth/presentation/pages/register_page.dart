@@ -153,13 +153,9 @@ class RegisterPage extends StatelessWidget {
                         ),
                         SizedBox(width: 5),
                         InkWell(
-                          onTap: () =>
-                          {
+                          onTap: () => navigatorPush(context, LoginPage())
 
-
-                            navigatorReplacement(context, LoginPage())
-
-                          },
+                          ,
                           child: Text(
                             "Login",
                             style: tsBodySmallMedium(ColorValue.blue),
