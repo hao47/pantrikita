@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pantrikita/core/route/navigator.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
 import 'package:pantrikita/core/util/validator/validator.dart';
 import 'package:pantrikita/core/widgets/button.dart';
 import 'package:pantrikita/core/widgets/custom_textformfield.dart';
+import 'package:pantrikita/feature/register/presentation/pages/register_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -127,7 +129,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       SizedBox(width: 5),
                       InkWell(
-                        /// ! tambahkan onTap navigasi ! ///
+                        onTap: () => navigatorReplacement(context, RegisterPage()),
                         child: Text(
                           "Register",
                           style: tsBodyMediumMedium(ColorValue.blue),

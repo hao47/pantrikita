@@ -6,6 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
 import 'package:pantrikita/feature/login/presentation/pages/login_page.dart';
+import 'package:pantrikita/feature/register/presentation/pages/register_page.dart';
 import 'package:pantrikita/injection-container.dart';
 import 'core/bloc/observer/app_bloc_observer.dart';
 import 'core/theme/app_style.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       title: 'PantriKita',
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: RegisterPage(),
     );
   }
 }
