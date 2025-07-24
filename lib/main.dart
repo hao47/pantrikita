@@ -9,6 +9,7 @@ import 'package:pantrikita/core/widgets/bottom_navigation.dart';
 import 'package:pantrikita/injection-container.dart';
 import 'core/bloc/observer/app_bloc_observer.dart';
 import 'core/theme/app_style.dart';
+import 'feature/auth/presentation/pages/login_page.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         title: 'PantriKita',
         debugShowCheckedModeBanner: false,
-        home: PantryPage(),
+        home: LoginPage(),
       ),
     );
   }
