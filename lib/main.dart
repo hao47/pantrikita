@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pantrikita/core/bloc/provider/provider.dart';
+import 'package:pantrikita/feature/auth/presentation/pages/register_page.dart';
 import 'package:pantrikita/feature/pantry/presentation/pages/pantry_page.dart';
 import 'package:pantrikita/core/widgets/bottom_navigation.dart';
 import 'package:pantrikita/injection-container.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         title: 'PantriKita',
         debugShowCheckedModeBanner: false,
-        home: LoginPage(),
+        home: RegisterPage(),
       ),
     );
   }

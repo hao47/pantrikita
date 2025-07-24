@@ -12,55 +12,55 @@ import 'package:pantrikita/feature/auth/data/data_sources/repository/auth_reposi
 
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/login.dart';
+import '../../domain/entities/register.dart';
 
 
-part 'login_event.dart';
+part 'register_event.dart';
+part 'register_state.dart';
 
-part 'login_state.dart';
-
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc({required AuthRepository repository})
+class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
+  RegisterBloc({required AuthRepository repository})
       : _repository = repository,
-        super(LoginInitial()) {
-    on<GetLoginEvent>(_getHomeEventHandler);
+        super(RegisterInitial()) {
+    on<GetRegisterEvent>(_getHomeEventHandler);
   }
 
   final AuthRepository _repository;
 
   Future<void> _getHomeEventHandler(
-      GetLoginEvent event,
-      Emitter<LoginState> emit,
+      GetRegisterEvent event,
+      Emitter<RegisterState> emit,
       ) async {
-    emit(LoginLoading());
+    emit(RegisterLoading());
 
     final either =
-    await _repository.getLogin(event.email, event.password);
+    await _repository.getRegister(event.email, event.password,event.username);
 
 
     _emitResult(either, emit);
   }
 
   Future<void> _emitResult(
-      Either<Failure, Login> either,
-      Emitter<LoginState> emit,
+      Either<Failure, Register> either,
+      Emitter<RegisterState> emit,
       ) async {
     await either.fold(
           (failure) async {
 
             print(failure);
         emit(
-          LoginFailure(
+          RegisterFailure(
             message: mapFailureToMessage(failure),
           ),
         );
       },
           (data) {
-        GetStorage().write("user_token", data.data.accessToken);
+
 
 
         emit(
-          LoginSuccess(
-            login: data,
+          RegisterSuccess(
+            register: data,
           ),
         );
       },

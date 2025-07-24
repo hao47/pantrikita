@@ -9,6 +9,7 @@ import 'core/util/local/local_storage.dart';
 import 'core/util/network/network_info.dart';
 import 'feature/auth/data/data_sources/remote/auth_remote_data_sources.dart';
 import 'feature/auth/data/data_sources/repository/auth_repository.dart';
+import 'feature/auth/presentation/bloc/register_bloc.dart';
 
 final sl = GetIt.I;
 
@@ -42,6 +43,7 @@ void _initializeAuthFeature() {
 
   // bloc
   sl.registerFactory(() => LoginBloc(repository: sl()));
+  sl.registerFactory(() => RegisterBloc(repository: sl()));
 
   // data sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
