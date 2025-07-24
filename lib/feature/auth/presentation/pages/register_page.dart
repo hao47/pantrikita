@@ -142,22 +142,27 @@ class RegisterPage extends StatelessWidget {
                 ),
                 Align(
                   alignment: AlignmentDirectional.bottomCenter,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Already have an account?",
-                        style: tsBodyMediumMedium(ColorValue.grayDark),
-                      ),
-                      SizedBox(width: 5),
-                      InkWell(
-                        onTap: () => navigatorReplacement(context, LoginPage()),
-                        child: Text(
-                          "Login",
-                          style: tsBodyMediumMedium(ColorValue.blue),
+                  child: Container(
+                    margin: EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Already have an account?",
+                          style: tsBodySmallMedium(ColorValue.grayDark),
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 5),
+                        InkWell(
+                          onTap: () => navigatorPush(context, RegisterPage())
+
+                          ,
+                          child: Text(
+                            "Login",
+                            style: tsBodySmallMedium(ColorValue.blue),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
