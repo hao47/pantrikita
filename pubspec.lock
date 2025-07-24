@@ -326,14 +326,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
-  flutter_overlay_apps:
-    dependency: "direct main"
-    description:
-      name: flutter_overlay_apps
-      sha256: ded9063edca4eb811c5a1e8604c5a4ece925c377438f0860fe0869a1276a9283
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
   flutter_svg:
     dependency: "direct main"
     description:
