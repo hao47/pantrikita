@@ -1,22 +1,29 @@
-import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+
+
+import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:pantrikita/feature/auth/presentation/bloc/login_bloc.dart';
-import 'package:pantrikita/feature/pantry/presentation/bloc/pantry_bloc.dart';
+import 'package:pantrikita/feature/auth/data/data_sources/remote/auth_remote_data_sources.dart';
+import 'package:pantrikita/feature/auth/data/data_sources/repository/auth_repository.dart';
 
 import 'core/util/local/local_storage.dart';
 import 'core/util/network/network_info.dart';
-import 'feature/auth/data/data_sources/remote/auth_remote_data_sources.dart';
-import 'feature/auth/data/data_sources/repository/auth_repository.dart';
+import 'feature/auth/presentation/bloc/login_bloc.dart';
+import 'feature/pantry/presentation/bloc/pantry_bloc.dart';
+import 'feature/profile/data/data_sources/remote/profile_remote_data_sources.dart';
+import 'feature/profile/data/repositories/profile_repository.dart';
+import 'feature/profile/presentation/bloc/profile_bloc.dart';
 import 'feature/auth/presentation/bloc/register_bloc.dart';
 
 final sl = GetIt.I;
 
 Future<void> initializeServiceLocator() async {
   /// Feature Page
-  _initializePantryFeature();
+
   _initializeAuthFeature();
+  _initializeProfileFeature();
+  _initializePantryFeature();
 
   /// Core
   ///
@@ -37,22 +44,60 @@ Future<void> initializeServiceLocator() async {
   sl.registerLazySingleton(() => box);
   sl.registerLazySingleton(() => http.Client());
   sl.registerLazySingleton(() => InternetConnectionChecker.createInstance());
+
 }
 
+
 void _initializeAuthFeature() {
+  // bloc
+  sl.registerFactory(
+        () => LoginBloc(
+      repository: sl(),
+    ),
+  );
 
   // bloc
-  sl.registerFactory(() => LoginBloc(repository: sl()));
-  sl.registerFactory(() => RegisterBloc(repository: sl()));
+  sl.registerFactory(
+        () => RegisterBloc(
+      repository: sl(),
+    ),
+  );
 
   // data sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
-        () => AuthRemoteDataSourceImpl(client: sl()),
+        () => AuthRemoteDataSourceImpl(
+      client: sl(),
+    ),
   );
 
   // repository
   sl.registerLazySingleton<AuthRepository>(
         () => AuthRepositoryImpl(
+      remoteDataSource: sl(),
+      networkInfo: sl(),
+      localStorage: sl(),
+    ),
+  );
+}
+
+void _initializeProfileFeature() {
+  // bloc
+  sl.registerFactory(
+        () => ProfileBloc(
+      repository: sl(),
+    ),
+  );
+
+  // data sources
+  sl.registerLazySingleton<ProfileRemoteDataSource>(
+        () => ProfileRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+
+  // repository
+  sl.registerLazySingleton<ProfileRepository>(
+        () => ProfileRepositoryImpl(
       remoteDataSource: sl(),
       networkInfo: sl(),
       localStorage: sl(),
@@ -68,3 +113,5 @@ void _initializePantryFeature() {
         () => PantryBloc(),
   );
 }
+
+
