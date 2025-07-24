@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:get_storage/get_storage.dart';
 
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
