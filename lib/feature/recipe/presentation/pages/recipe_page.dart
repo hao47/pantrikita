@@ -18,7 +18,7 @@ class RecipePage extends StatelessWidget {
               Center(
                 child: Text(
                   'Recipes',
-                  style: tsTitleSmallBold(ColorValue.black),
+                  style: tsTitleMediumBold(ColorValue.black),
                 ),
               ),
               const SizedBox(height: 30),
