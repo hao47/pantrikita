@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pantrikita/core/route/navigator.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/widgets/custom_loading.dart';
-import 'package:pantrikita/feature/auth/login/presentation/pages/login_page.dart';
+import 'package:pantrikita/feature/auth/presentation/pages/login_page.dart';
 import 'package:pantrikita/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:pantrikita/feature/profile/presentation/widgets/profile_content.dart';
 import 'package:pantrikita/feature/profile/presentation/widgets/profile_error.dart';

@@ -17,7 +17,7 @@ class WidgetProfileContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profile = state.profile;
-    final bio = profile.data.bio.first;
+    final bio = profile.data.bio;
     final impact = profile.data.impact;
 
     return SafeArea(

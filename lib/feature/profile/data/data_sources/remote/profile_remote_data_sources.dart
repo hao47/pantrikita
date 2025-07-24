@@ -39,7 +39,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     final url = Uri.parse('${Api.url}/profile/logout');
 
     final response = await client
-        .post(
+        .delete(
       url,
       headers: Api.headersToken(token),
     )
