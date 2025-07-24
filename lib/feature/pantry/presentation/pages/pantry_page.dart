@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
+import 'package:pantrikita/core/widgets/card_item.dart';
 import 'package:pantrikita/feature/pantry/data/dropdown_data/category_dropdown_data.dart';
 import 'package:pantrikita/feature/pantry/data/dropdown_data/sort_dropdown_data.dart';
 import 'package:pantrikita/feature/pantry/data/dropdown_data/status_dropdown_data.dart';
 import 'package:pantrikita/feature/pantry/presentation/bloc/pantry_bloc.dart';
+import 'package:pantrikita/feature/pantry/presentation/widgets/card_no_item.dart';
 import 'package:pantrikita/feature/pantry/presentation/widgets/card_summary_pantry.dart';
+import 'package:pantrikita/feature/pantry/presentation/widgets/custom_search_bar.dart';
 import 'package:pantrikita/feature/pantry/presentation/widgets/dropdown_filter_pantry.dart';
 
 class PantryPage extends StatelessWidget {
@@ -16,6 +19,9 @@ class PantryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    final searchController = TextEditingController();
 
     return Scaffold(
       backgroundColor: ColorValue.backgroundColor,
@@ -39,6 +45,23 @@ class PantryPage extends StatelessWidget {
                         CardSummaryPantry(textTitle: 'Expiring', totalCount: 2, countColor: ColorValue.primary),
                         CardSummaryPantry(textTitle: 'Expired', totalCount: 4, countColor: ColorValue.red),
                       ]
+                  ),
+
+                  SizedBox(height: 20),
+
+                  CustomSearchBar(
+                      hintName: 'Search Items...',
+                      screenHeight: screenHeight,
+                      screenWidth: screenWidth,
+                      onSearch: (query) {
+                        searchController.text = query;
+                        context.read<PantryBloc>().add(GetFilterSearchEvent(filterSearch: query));
+                      },
+                      onClearSearch: () {
+                        searchController.clear();
+                        context.read<PantryBloc>().add(GetFilterSearchEvent(filterSearch: ''));
+                      },
+                      searchController: searchController
                   ),
 
                   SizedBox(height: 20),
@@ -77,7 +100,17 @@ class PantryPage extends StatelessWidget {
                           );
                         }),
                       ]
-                  )
+                  ),
+
+                  SizedBox(height: 20),
+
+                  CardNoItem(),
+
+                  SizedBox(height: 20),
+
+                  CardItem(textName: 'Susu', textCategory: 'Dairy', textLocation: "Refrigerator", textStatus: "expired", icon: '🥛', status: 'RED_TRANSPARENT'),
+
+                  SizedBox(height: 20)
                 ],
               ),
             ),
