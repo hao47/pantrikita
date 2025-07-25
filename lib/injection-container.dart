@@ -8,6 +8,7 @@ import 'package:pantrikita/feature/auth/data/data_sources/remote/auth_remote_dat
 import 'package:pantrikita/feature/auth/data/data_sources/repository/auth_repository.dart';
 import 'package:pantrikita/feature/pantry/data/data_sources/remote/pantry_remote_data_sources.dart';
 import 'package:pantrikita/feature/pantry/data/data_sources/repositories/pantry_repository.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/bloc/pantry_detail_bloc.dart';
 
 import 'core/util/local/local_storage.dart';
 import 'core/util/network/network_info.dart';
@@ -30,6 +31,7 @@ Future<void> initializeServiceLocator() async {
   _initializeProfileFeature();
   _initializePantryFeature();
   _initializeHomeFeature();
+  _initializePantryDetailFeature();
 
   /// Core
   ///
@@ -166,4 +168,9 @@ void _initializePantryFeature() {
   );
 }
 
-
+void _initializePantryDetailFeature() {
+  // bloc
+  sl.registerFactory(
+        () => PantryDetailBloc(),
+  );
+}

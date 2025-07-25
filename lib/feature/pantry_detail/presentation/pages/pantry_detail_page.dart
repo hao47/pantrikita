@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pantrikita/core/route/navigator.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/bloc/pantry_detail_bloc.dart';
 import 'package:pantrikita/feature/pantry_detail/presentation/widgets/card_action_consumed.dart';
 import 'package:pantrikita/feature/pantry_detail/presentation/widgets/card_action_expired.dart';
 import 'package:pantrikita/feature/pantry_detail/presentation/widgets/card_item_pantry_detail.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/widgets/tab_bar_pantry_detail.dart';
 
 class PantryDetailPage extends StatelessWidget {
   const PantryDetailPage({super.key});
@@ -54,6 +57,14 @@ class PantryDetailPage extends StatelessWidget {
                   SizedBox(height: 20),
 
                   CardActionExpired(),
+
+                  SizedBox(height: 20),
+
+                  BlocBuilder<PantryDetailBloc, PantryDetailState>(builder: (context, state) {
+                    return TabPantryDetail(onValueChanged: (v) {
+                      context.read<PantryDetailBloc>().add(GetChangeTabIndexEvent(changeTabIndex: v));
+                    });
+                  }),
 
                   SizedBox(height: 20),
                 ],
