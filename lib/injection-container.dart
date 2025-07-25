@@ -8,6 +8,8 @@ import 'package:pantrikita/feature/auth/data/data_sources/remote/auth_remote_dat
 import 'package:pantrikita/feature/auth/data/data_sources/repository/auth_repository.dart';
 import 'package:pantrikita/feature/pantry/data/data_sources/remote/pantry_remote_data_sources.dart';
 import 'package:pantrikita/feature/pantry/data/data_sources/repositories/pantry_repository.dart';
+import 'package:pantrikita/feature/pantry_detail/data/data_sources/remote/pantry_remote_data_sources.dart';
+import 'package:pantrikita/feature/pantry_detail/data/data_sources/repositories/pantry_detail_repository.dart';
 import 'package:pantrikita/feature/pantry_detail/presentation/bloc/pantry_detail_bloc.dart';
 
 import 'core/util/local/local_storage.dart';
@@ -171,6 +173,24 @@ void _initializePantryFeature() {
 void _initializePantryDetailFeature() {
   // bloc
   sl.registerFactory(
-        () => PantryDetailBloc(),
+        () => PantryDetailBloc(
+      repository: sl(),
+    ),
+  );
+
+  // data sources
+  sl.registerLazySingleton<PantryDetailRemoteDataSource>(
+        () => PantryDetailRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+
+  // repository
+  sl.registerLazySingleton<PantryDetailRepository>(
+        () => PantryDetailRepositoryImpl(
+      remoteDataSource: sl(),
+      networkInfo: sl(),
+      localStorage: sl(),
+    ),
   );
 }

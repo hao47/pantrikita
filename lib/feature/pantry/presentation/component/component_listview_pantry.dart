@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pantrikita/core/route/navigator.dart';
 import 'package:pantrikita/core/widgets/card_item.dart';
 import 'package:pantrikita/feature/pantry/presentation/bloc/pantry_bloc.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/pages/pantry_detail_page.dart';
 
 class ComponentListviewPantry extends StatelessWidget {
   ComponentListviewPantry({
@@ -25,7 +26,9 @@ class ComponentListviewPantry extends StatelessWidget {
         final item = state.pantryResponse!.data.items[index];
 
         return InkWell(
-          onTap: () {},
+          onTap: () {
+            navigatorPush(context, PantryDetailPage(pantryId: item.id));
+          },
           child: Container(
             width: double.infinity,
             margin: const EdgeInsets.only(bottom: 10),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
 
@@ -25,13 +24,13 @@ class CardActionConsumed extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: screenWidth * 0.175,
-                height: screenWidth * 0.175,
-                decoration: BoxDecoration(
-                  color: ColorValue.whiteColor,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(child: Icon(Icons.check_circle_outline, color: ColorValue.primary, size: screenWidth * 0.08)),
+                  width: screenWidth * 0.175,
+                  height: screenWidth * 0.175,
+                  decoration: BoxDecoration(
+                      color: ColorValue.whiteColor,
+                      shape: BoxShape.circle,
+                  ),
+                  child: Center(child: Icon(Icons.check_circle_outline, color: ColorValue.primary, size: screenWidth * 0.08)),
               ),
 
               SizedBox(height: 20),

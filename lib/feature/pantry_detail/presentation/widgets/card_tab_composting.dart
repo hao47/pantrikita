@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
+import 'package:pantrikita/feature/pantry_detail/data/domain/entities/pantry_detail.dart';
 
 class CardTabComposting extends StatelessWidget {
   CardTabComposting({
     super.key,
+    required this.pantryDetail,
   });
 
+  final PantryDetail? pantryDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +53,11 @@ class CardTabComposting extends StatelessWidget {
               // * ListView * //
               ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: 5,
+                itemCount: pantryDetail!.data.composting.orders.length,
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
+                  final textGuide = pantryDetail!.data.composting.orders[index];
 
                   return Container(
                       width: double.infinity,
@@ -61,7 +65,7 @@ class CardTabComposting extends StatelessWidget {
                       child: _containerComposting(
                         context: context,
                         index: index,
-                        textGuide: 'Collect your food scraps and yard waste in a compost bin or pile',
+                        textGuide: textGuide,
                       )
                   );
                 },
@@ -93,7 +97,7 @@ class CardTabComposting extends StatelessWidget {
 
                     SizedBox(height: 10),
 
-                    Text('Composting reduces waste and enriches soil, promoting a healthier environment.', style: tsLabelLargeMedium(ColorValue.greenDark)),
+                    Text(pantryDetail!.data.composting.enviromentalImpact, style: tsLabelLargeMedium(ColorValue.greenDark)),
                   ],
                 ),
               )

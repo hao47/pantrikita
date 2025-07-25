@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
 
 class CardWarningPantryDetail extends StatelessWidget {
@@ -30,13 +28,13 @@ class CardWarningPantryDetail extends StatelessWidget {
             border: Border.all(color: colorBorder, width: 0.5)
         ),
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(Icons.warning_amber_outlined, color: colorText, size: 24),
-              SizedBox(width: screenWidth * 0.02),
-              Expanded(child: Text(textWarning, style: tsLabelLargeMedium(colorText)))
-            ]
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(Icons.warning_amber_outlined, color: colorText, size: 24),
+            SizedBox(width: screenWidth * 0.02),
+            Expanded(child: Text(textWarning, style: tsLabelLargeMedium(colorText)))
+          ]
         )
     );
   }

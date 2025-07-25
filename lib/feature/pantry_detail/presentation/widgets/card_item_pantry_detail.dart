@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
 import 'package:pantrikita/feature/pantry_detail/presentation/widgets/card_warning_pantry_detail.dart';
@@ -118,57 +117,79 @@ class CardItemPantryDetail extends StatelessWidget {
 
             // ** Expiry Date and Location ** //
             Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: screenWidth * 0.375,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.calendar_today, color: ColorValue.grayDark, size: screenWidth * 0.05),
-                        SizedBox(width: screenWidth * 0.02),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Expiry Date', style: tsLabelLargeRegular(ColorValue.grayDark), overflow: TextOverflow.ellipsis),
-                              SizedBox(height: 5),
-                              Text(textExpiryDate, style: tsBodySmallMedium(ColorValue.black), overflow: TextOverflow.ellipsis),
-                            ]
-                        )
-                      ],
-                    ),
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: screenWidth * 0.375,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.calendar_today, color: ColorValue.grayDark, size: screenWidth * 0.05),
+                      SizedBox(width: screenWidth * 0.02),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Expiry Date', style: tsLabelLargeRegular(ColorValue.grayDark), overflow: TextOverflow.ellipsis),
+                          SizedBox(height: 5),
+                          Text(textExpiryDate, style: tsBodySmallMedium(ColorValue.black), overflow: TextOverflow.ellipsis),
+                        ]
+                      )
+                    ],
                   ),
+                ),
 
-                  SizedBox(
-                    width: screenWidth * 0.375,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.location_on, color: ColorValue.grayDark, size: screenWidth * 0.05),
-                        SizedBox(width: screenWidth * 0.02),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Location', style: tsLabelLargeRegular(ColorValue.grayDark), overflow: TextOverflow.ellipsis),
-                              SizedBox(height: 5),
-                              Text(textLocation, style: tsBodySmallMedium(ColorValue.black), overflow: TextOverflow.ellipsis),
-                            ]
-                        )
-                      ],
-                    ),
-                  )
-                ]
+                SizedBox(
+                  width: screenWidth * 0.375,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.location_on, color: ColorValue.grayDark, size: screenWidth * 0.05),
+                      SizedBox(width: screenWidth * 0.02),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Location', style: tsLabelLargeRegular(ColorValue.grayDark), overflow: TextOverflow.ellipsis),
+                          SizedBox(height: 5),
+                          Text(textLocation, style: tsBodySmallMedium(ColorValue.black), overflow: TextOverflow.ellipsis),
+                        ]
+                      )
+                    ],
+                  ),
+                )
+              ]
             ),
 
             const SizedBox(height: 20),
 
             // ** Warning Card ** //
             _cardWarning(status: status, textWarning: textWarning),
+
+            const SizedBox(height: 20),
+
+            // ** Edit Buttons ** //
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(vertical: screenWidth * 0.03),
+              decoration: BoxDecoration(
+                color: ColorValue.whiteColor,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: ColorValue.gray, width: 0.5)
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(Icons.edit_outlined, color: ColorValue.black, size: screenWidth * 0.05),
+                  SizedBox(width: screenWidth * 0.02),
+                  Text('Edit Item', style: tsBodySmallMedium(ColorValue.black)),
+                ]
+              )
+            )
           ],
         )
     );

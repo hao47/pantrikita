@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
+import 'package:pantrikita/feature/pantry_detail/data/domain/entities/pantry_detail.dart';
 
 class CardTabSuggestedRecipes extends StatelessWidget {
   CardTabSuggestedRecipes({
     super.key,
+    required this.pantryDetail,
   });
 
+  final PantryDetail? pantryDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -39,21 +42,23 @@ class CardTabSuggestedRecipes extends StatelessWidget {
 
               ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: 5,
+                itemCount: pantryDetail!.data.recipe.length,
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
+                  final item = pantryDetail!.data.recipe[index];
 
                   return InkWell(
+                    onTap: () {},
                     child: Container(
                       width: double.infinity,
                       margin: const EdgeInsets.only(bottom: 10),
                       child: _containerSuggestedRecipes(
                           context: context,
-                          textName: 'Recipe Name $index',
-                          textDescription: 'This is a description of the recipe. It is very delicious and easy to make.',
-                          textDifficulty: (index % 3 == 0) ? 'Easy' : (index % 3 == 1) ? 'Medium' : 'Hard',
-                          textCookTime: (index % 3 == 0) ? '30 mins' : (index % 3 == 1) ? '45 mins' : '1 hour',
+                          textName: item.title,
+                          textDescription: item.description,
+                          textDifficulty: item.difficulty,
+                          textCookTime: item.cookTime,
                       )
                     ),
                   );
@@ -76,7 +81,7 @@ class CardTabSuggestedRecipes extends StatelessWidget {
     Color difficultyColor() {
       switch (textDifficulty.toLowerCase()) {
         case 'easy':
-          return ColorValue.green;
+          return ColorValue.greenDark;
         case 'medium':
           return ColorValue.yellowDark;
         case 'hard':

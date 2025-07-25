@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
+import 'package:pantrikita/feature/pantry_detail/data/domain/entities/pantry_detail.dart';
 
 class CardTabUseEverything extends StatelessWidget {
   CardTabUseEverything({
     super.key,
+    required this.pantryDetail,
   });
 
+  final PantryDetail? pantryDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -39,22 +42,23 @@ class CardTabUseEverything extends StatelessWidget {
 
               ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: 5,
+                itemCount: pantryDetail!.data.useEverything.length,
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
+                  final item = pantryDetail!.data.useEverything[index];
 
                   return Container(
                       width: double.infinity,
                       margin: const EdgeInsets.only(bottom: 10),
                       child: _containerUseEverything(
                         context: context,
-                        textName: 'Recipe Name $index',
-                        textDescription: 'This is a description of the recipe. It is very delicious and easy to make.',
-                        textDifficulty: (index % 3 == 0) ? 'Easy' : (index % 3 == 1) ? 'Medium' : 'Hard',
-                        textCookTime: (index % 3 == 0) ? '30 mins' : (index % 3 == 1) ? '45 mins' : '1 hour',
-                        textIngredient: 'Ingredient 1, Ingredient 2, Ingredient 3, Ingredient 4, Ingredient 5',
-                        textInstruction: '1. Do this, 2. Do that, 3. Cook it, 4. Serve it'
+                        textName: item.title,
+                        textDescription: item.description,
+                        textDifficulty: item.difficulty,
+                        textCookTime: item.cookTime,
+                        textIngredient: item.ingredient,
+                        textInstruction: item.instruction,
                       )
                   );
                 },
@@ -94,6 +98,19 @@ class CardTabUseEverything extends StatelessWidget {
           return ColorValue.greenStatusTransparant;
         case 'medium':
           return ColorValue.yellowStatusTransparant;
+        case 'hard':
+          return ColorValue.redStatusTransparant;
+        default:
+          return ColorValue.grayTransparent;
+      }
+    }
+
+    Color difficultyTextColor() {
+      switch (textDifficulty.toLowerCase()) {
+        case 'easy':
+          return ColorValue.greenStatusTransparant;
+        case 'medium':
+          return ColorValue.yellowDark;
         case 'hard':
           return ColorValue.redStatusTransparant;
         default:
@@ -144,7 +161,7 @@ class CardTabUseEverything extends StatelessWidget {
                         color: difficultyBackgroundColor(),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Text(textDifficulty, style: tsLabelLargeMedium(difficultyColor()),)
+                      child: Text(textDifficulty, style: tsLabelLargeMedium(difficultyTextColor()),)
                   ),
                 ]
             ),

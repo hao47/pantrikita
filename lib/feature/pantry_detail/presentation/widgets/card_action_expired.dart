@@ -74,9 +74,9 @@ class CardActionExpired extends StatelessWidget {
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(vertical: 15),
                 decoration: BoxDecoration(
-                    color: ColorValue.whiteColor,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: ColorValue.red, width: 1)
+                  color: ColorValue.whiteColor,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: ColorValue.red, width: 1)
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
