@@ -8,6 +8,7 @@ import 'package:pantrikita/feature/auth/presentation/pages/login_page.dart';
 import 'package:pantrikita/feature/auth/presentation/pages/register_page.dart';
 import 'package:pantrikita/core/widgets/bottom_navigation.dart';
 import 'package:pantrikita/feature/home/presentation/pages/home_page.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/pages/pantry_detail_page.dart';
 import 'package:pantrikita/feature/profile/presentation/pages/profile_page.dart';
 import 'package:pantrikita/injection-container.dart';
 import 'core/bloc/observer/app_bloc_observer.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         title: 'PantriKita',
         debugShowCheckedModeBanner: false,
-        home: BottomNavigation(),
+        home: PantryDetailPage(),
       ),
     );
   }
