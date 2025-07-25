@@ -98,7 +98,7 @@ class RegisterPage extends StatelessWidget {
                       BlocConsumer<RegisterBloc, RegisterState>(
                         listener: (context, state) {
                           if (state is RegisterSuccess) {
-                            navigatorPushAndRemove(context, LoginPage());
+                            navigatorPushAndRemoveAll(context, LoginPage());
                           } else if (state is RegisterFailure) {
                             showTopSnackBar(
                               Overlay.of(context),
