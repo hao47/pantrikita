@@ -58,9 +58,11 @@ class CardActionConsumed extends StatelessWidget {
               InkWell(
                 onTap: () {
                   context.read<PantryDetailBloc>().add(PutPantryDetailEvent(pantryId: pantryId, status: 'consumed'));
-                  SnackBar(
-                    content: Text('Item marked as consumed successfully!'),
-                    backgroundColor: ColorValue.green,
+                  ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(
+                      content: Text('Item marked as consumed successfully!'),
+                      backgroundColor: ColorValue.green,
+                    ),
                   );
                   navigatorPop(context);
                 },

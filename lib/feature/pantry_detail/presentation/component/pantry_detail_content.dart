@@ -68,9 +68,11 @@ class PantryDetailContent extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       context.read<PantryDetailBloc>().add(DeletePantryDetailEvent(pantryId: state.pantryDetailResponse!.data.id.toString()));
-                      SnackBar(
-                        content: Text('Item deleted successfully!'),
-                        backgroundColor: ColorValue.red,
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Item deleted successfully!'),
+                          backgroundColor: ColorValue.red,
+                        ),
                       );
                       navigatorPop(context);
                     },
