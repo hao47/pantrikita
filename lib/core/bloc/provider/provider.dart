@@ -9,6 +9,7 @@ import 'package:pantrikita/feature/recipe/presentation/bloc/recipe_detail_bloc.d
 import 'package:pantrikita/feature/scan/presentation/bloc/scan_bloc.dart';
 
 import '../../../feature/auth/presentation/bloc/register_bloc.dart';
+import '../../../feature/pantry_detail/presentation/bloc/pantry_detail_bloc.dart';
 import '../../../injection-container.dart';
 
 class Provider {
