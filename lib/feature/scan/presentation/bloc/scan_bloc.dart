@@ -113,24 +113,28 @@ class ScanBloc extends Bloc<ScanEvent, ScanState> {
       source: ImageSource.camera ,
     );
 
-    emit(state.copyWith(identifyStatus: IdentifyStatus.loading));
+    if(image != null){
 
-    final either = await _repository.postIdentify(image!);
+      emit(state.copyWith(identifyStatus: IdentifyStatus.loading));
+
+      final either = await _repository.postIdentify(image!);
 
 
-    await either.fold(
-          (failure) async {
-        emit(
-          state.copyWith(
-            identifyStatus: IdentifyStatus.error,
-            message: mapFailureToMessage(failure),
-          ),
-        );
-      },
-          (data) {
-        emit(state.copyWith(identify: data, identifyStatus: IdentifyStatus.success));
-      },
-    );
+      await either.fold(
+            (failure) async {
+          emit(
+            state.copyWith(
+              identifyStatus: IdentifyStatus.error,
+              message: mapFailureToMessage(failure),
+            ),
+          );
+        },
+            (data) {
+          emit(state.copyWith(identify: data, identifyStatus: IdentifyStatus.success));
+        },
+      );
+
+    }
 
 
 

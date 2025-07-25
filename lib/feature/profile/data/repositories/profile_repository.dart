@@ -54,6 +54,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final cachedData = await box.read("cached_profile");
 
       if (cachedData != null) {
+
         print("✅ Profile cache found, returning cached data");
         final cachedProfile = profileFromJson(cachedData);
         return Right(cachedProfile);

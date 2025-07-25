@@ -29,6 +29,8 @@ class HomeRepositoryImpl implements HomeRepository {
       try {
         final box = GetStorage();
         final token = await box.read("user_token");
+
+        print("✅ Home Detail API success");
         final model = await remoteDataSource.getHome(token);
         return Right(model);
       } on ServerException {
