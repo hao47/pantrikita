@@ -7,6 +7,9 @@ import 'package:pantrikita/feature/pantry_detail/presentation/bloc/pantry_detail
 import 'package:pantrikita/feature/pantry_detail/presentation/widgets/card_action_consumed.dart';
 import 'package:pantrikita/feature/pantry_detail/presentation/widgets/card_action_expired.dart';
 import 'package:pantrikita/feature/pantry_detail/presentation/widgets/card_item_pantry_detail.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/widgets/card_tab_composting.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/widgets/card_tab_suggested_recipes.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/widgets/card_tab_use_everything.dart';
 import 'package:pantrikita/feature/pantry_detail/presentation/widgets/tab_bar_pantry_detail.dart';
 
 class PantryDetailPage extends StatelessWidget {
@@ -65,6 +68,18 @@ class PantryDetailPage extends StatelessWidget {
                       context.read<PantryDetailBloc>().add(GetChangeTabIndexEvent(changeTabIndex: v));
                     });
                   }),
+
+                  SizedBox(height: 20),
+
+                  CardTabSuggestedRecipes(),
+
+                  SizedBox(height: 20),
+
+                  CardTabUseEverything(),
+
+                  SizedBox(height: 20),
+
+                  CardTabComposting(),
 
                   SizedBox(height: 20),
                 ],
