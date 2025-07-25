@@ -40,25 +40,20 @@ class PantryRepositoryImpl implements PantryRepository {
         final box = GetStorage();
         final token = await box.read("user_token");
 
-        print("🌐 Internet available, trying Pantry API...");
         final model = await remoteDataSource.getPantry(token, category, status, filter, search);
 
         print("✅ Pantry API success, saving to cache");
         await box.write("cached_pantry", pantryToJson(model));
 
         return Right(model);
-      } on ServerException catch (e) {
-        print("❌ Pantry server error: $e, trying cache...");
+      } on ServerException {
         return _getCachedPantryData("ServerException");
-      } on TimeOutException catch (e) {
-        print("⏰ Pantry timeout error: $e, trying cache...");
+      } on TimeOutException {
         return _getCachedPantryData("TimeOutException");
       } catch (e) {
-        print("💥 Pantry unknown error: $e, trying cache...");
         return _getCachedPantryData("UnknownException");
       }
     } else {
-      print("📵 No internet for Pantry, trying cache...");
       return _getCachedPantryData("NetworkFailure");
     }
   }
@@ -73,7 +68,6 @@ class PantryRepositoryImpl implements PantryRepository {
         final cachedPantry = pantryFromJson(cachedData);
         return Right(cachedPantry);
       } else {
-        print("❌ No pantry cache available");
 
         switch (errorType) {
           case "NetworkFailure":
