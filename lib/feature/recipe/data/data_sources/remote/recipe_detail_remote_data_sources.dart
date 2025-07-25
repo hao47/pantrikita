@@ -37,6 +37,7 @@ class RecipeDetailRemoteDataSourceImpl implements RecipeDetailRemoteDataSource {
       print("📡 Recipe Detail API Response: ${response.statusCode}");
 
       if (response.statusCode == 200) {
+        print(response.body);
         final recipeDetail = recipeDetailFromJson(response.body);
         print("✅ Successfully parsed recipe detail: ${recipeDetail.data.title}");
         return recipeDetail;

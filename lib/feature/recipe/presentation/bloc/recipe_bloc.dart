@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:meta/meta.dart';
-import '../../../../core/error/failures.dart';
-import '../../data/repositories/recipe_repository.dart';
-import '../../domain/entities/recipe.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pantrikita/core/error/failures.dart';
+import 'package:pantrikita/feature/recipe/data/repositories/recipe_repository.dart';
+import 'package:pantrikita/feature/recipe/domain/entities/recipe.dart';
 
 part 'recipe_event.dart';
 part 'recipe_state.dart';

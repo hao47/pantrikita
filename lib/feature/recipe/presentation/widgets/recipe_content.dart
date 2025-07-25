@@ -45,7 +45,7 @@ class WidgetRecipeContent extends StatelessWidget {
                     ],
                   ),
                   onPressed: () {
-                    context.read<RecipeBloc>().add(GetRecipesEvent());
+                    context.read<RecipeBloc>().add(RegenerateRecipesEvent());
                     showTopSnackBar(
                       Overlay.of(context),
                       const CustomSnackBar.info(message: "Regenerating recipes..."),
