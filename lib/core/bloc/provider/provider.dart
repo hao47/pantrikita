@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pantrikita/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/bloc/pantry_detail_bloc.dart';
 import 'package:pantrikita/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:pantrikita/feature/auth/presentation/bloc/login_bloc.dart';
 import 'package:pantrikita/feature/auth/presentation/pages/register_page.dart';
@@ -25,6 +26,9 @@ class Provider {
       ),
       BlocProvider(
         create: (_) => sl.get<PantryBloc>(),
+      ),
+      BlocProvider(
+        create: (_) => sl.get<PantryDetailBloc>(),
       ),
       BlocProvider(
         create: (_) => sl.get<RecipeBloc>(),
