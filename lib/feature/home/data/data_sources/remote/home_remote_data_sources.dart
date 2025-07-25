@@ -15,7 +15,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<Home> getHome(String token) async {
-    final url = Uri.parse('${Api.url}/profile');
+    final url = Uri.parse('${Api.url}/home');
 
     final response = await client
         .get(
@@ -26,6 +26,9 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
           const Duration(seconds: 15),
           onTimeout: () => throw const TimeOutException(),
         );
+
+
+    print(response.body);
 
     if (response.statusCode == 200) {
       return homeFromJson(response.body);
