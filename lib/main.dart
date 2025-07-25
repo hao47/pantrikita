@@ -5,19 +5,23 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pantrikita/core/bloc/provider/provider.dart';
 import 'package:pantrikita/feature/auth/presentation/pages/login_page.dart';
-import 'package:pantrikita/feature/auth/presentation/pages/register_page.dart';
-import 'package:pantrikita/core/widgets/bottom_navigation.dart';
-import 'package:pantrikita/feature/home/presentation/pages/home_page.dart';
-import 'package:pantrikita/feature/profile/presentation/pages/profile_page.dart';
-import 'package:pantrikita/feature/scan/presentation/pages/scan_page.dart';
 import 'package:pantrikita/injection-container.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 import 'core/bloc/observer/app_bloc_observer.dart';
 import 'core/theme/app_style.dart';
-import 'feature/notifications/presentations/notification_page.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   await GetStorage.init();
   await dotenv.load();
   deviceOrientation();
@@ -26,7 +30,6 @@ void main() async {
   await initializeServiceLocator();
 
   Bloc.observer = AppBlocObserver();
-
 
   runApp(const MyApp());
 }

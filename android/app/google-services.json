@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "377082337159",
+    "project_id": "pantrikita-app",
+    "storage_bucket": "pantrikita-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377082337159:android:589c40c96c52eda3702522",
+        "android_client_info": {
+          "package_name": "com.example.pantrikita"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjQWyQb2VeJy_n7pDaxVe2G3lXCZWMBwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
