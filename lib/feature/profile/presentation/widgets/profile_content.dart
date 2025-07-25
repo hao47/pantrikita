@@ -4,6 +4,7 @@ import 'package:pantrikita/core/route/navigator.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
 import 'package:pantrikita/core/widgets/button.dart';
+import 'package:pantrikita/feature/profile/presentation/pages/bookmark_page.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -170,7 +171,8 @@ class WidgetProfileContent extends StatelessWidget {
                 ),
                 title: Text('Saved Recipes', style: tsBodySmallMedium(ColorValue.black)),
                 trailing: const Icon(Icons.chevron_right, color: ColorValue.gray),
-                onTap: () {},
+                onTap: () {navigatorPush(context, SavedRecipesPage());
+                },
               ),
               ListTile(
                 leading: Container(

@@ -23,6 +23,12 @@ import 'feature/profile/data/data_sources/remote/profile_remote_data_sources.dar
 import 'feature/profile/data/repositories/profile_repository.dart';
 import 'feature/profile/presentation/bloc/profile_bloc.dart';
 import 'feature/auth/presentation/bloc/register_bloc.dart';
+import 'feature/recipe/data/data_sources/remote/recipe_detail_remote_data_sources.dart';
+import 'feature/recipe/data/data_sources/remote/recipe_remote_data_sources.dart';
+import 'feature/recipe/data/repositories/recipe_detail_repository.dart';
+import 'feature/recipe/data/repositories/recipe_repository.dart';
+import 'feature/recipe/presentation/bloc/recipe_bloc.dart';
+import 'feature/recipe/presentation/bloc/recipe_detail_bloc.dart';
 
 final sl = GetIt.I;
 
@@ -31,6 +37,8 @@ Future<void> initializeServiceLocator() async {
 
   _initializeAuthFeature();
   _initializeProfileFeature();
+  _initializeRecipeFeature();
+  _initializeRecipeDetailFeature();
   _initializePantryFeature();
   _initializeHomeFeature();
   _initializePantryDetailFeature();
@@ -117,6 +125,61 @@ void _initializeProfileFeature() {
 
 }
 
+void _initializeRecipeFeature() {
+  // bloc
+  sl.registerFactory(
+        () =>
+        RecipeBloc(
+          repository: sl(),
+        ),
+  );
+
+  // data sources
+  sl.registerLazySingleton<RecipeRemoteDataSource>(
+        () =>
+        RecipeRemoteDataSourceImpl(
+          client: sl(),
+        ),
+  );
+
+  // repository
+  sl.registerLazySingleton<RecipeRepository>(
+        () =>
+        RecipeRepositoryImpl(
+          remoteDataSource: sl(),
+          networkInfo: sl(),
+          localStorage: sl(),
+        ),
+  );
+}
+
+void _initializeRecipeDetailFeature() {
+  // bloc
+  sl.registerFactory(
+        () =>
+        RecipeDetailBloc(
+          repository: sl(),
+        ),
+  );
+
+  // data sources
+  sl.registerLazySingleton<RecipeDetailRemoteDataSource>(
+        () =>
+        RecipeDetailRemoteDataSourceImpl(
+          client: sl(),
+        ),
+  );
+
+  // repository
+  sl.registerLazySingleton<RecipeDetailRepository>(
+        () =>
+        RecipeDetailRepositoryImpl(
+          remoteDataSource: sl(),
+          networkInfo: sl(),
+          localStorage: sl(),
+        ),
+  );
+}
 
 void _initializeHomeFeature() {
   // bloc
