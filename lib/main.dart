@@ -7,6 +7,7 @@ import 'package:pantrikita/core/bloc/provider/provider.dart';
 import 'package:pantrikita/feature/auth/presentation/pages/login_page.dart';
 import 'package:pantrikita/feature/auth/presentation/pages/register_page.dart';
 import 'package:pantrikita/core/widgets/bottom_navigation.dart';
+import 'package:pantrikita/feature/home/presentation/pages/home_page.dart';
 import 'package:pantrikita/feature/profile/presentation/pages/profile_page.dart';
 import 'package:pantrikita/injection-container.dart';
 import 'core/bloc/observer/app_bloc_observer.dart';

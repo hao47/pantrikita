@@ -12,6 +12,9 @@ import 'package:pantrikita/feature/pantry/data/data_sources/repositories/pantry_
 import 'core/util/local/local_storage.dart';
 import 'core/util/network/network_info.dart';
 import 'feature/auth/presentation/bloc/login_bloc.dart';
+import 'feature/home/data/data_sources/remote/home_remote_data_sources.dart';
+import 'feature/home/data/repositories/home_repository.dart';
+import 'feature/home/presentation/bloc/home_bloc.dart';
 import 'feature/pantry/presentation/bloc/pantry_bloc.dart';
 import 'feature/profile/data/data_sources/remote/profile_remote_data_sources.dart';
 import 'feature/profile/data/repositories/profile_repository.dart';
@@ -26,6 +29,7 @@ Future<void> initializeServiceLocator() async {
   _initializeAuthFeature();
   _initializeProfileFeature();
   _initializePantryFeature();
+  _initializeHomeFeature();
 
   /// Core
   ///
@@ -100,6 +104,34 @@ void _initializeProfileFeature() {
   // repository
   sl.registerLazySingleton<ProfileRepository>(
         () => ProfileRepositoryImpl(
+      remoteDataSource: sl(),
+      networkInfo: sl(),
+      localStorage: sl(),
+    ),
+  );
+
+
+}
+
+
+void _initializeHomeFeature() {
+  // bloc
+  sl.registerFactory(
+        () => HomeBloc(
+      repository: sl(),
+    ),
+  );
+
+  // data sources
+  sl.registerLazySingleton<HomeRemoteDataSource>(
+        () => HomeRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+
+  // repository
+  sl.registerLazySingleton<HomeRepository>(
+        () => HomeRepositoryImpl(
       remoteDataSource: sl(),
       networkInfo: sl(),
       localStorage: sl(),
