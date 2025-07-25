@@ -17,7 +17,7 @@ class ScanContent extends StatelessWidget {
     } else if (index == 2) {
       return Container();
     } else if(index == 3){
-      print("masuk manual");
+
       return ScanManual();
     }else {
       return Container();

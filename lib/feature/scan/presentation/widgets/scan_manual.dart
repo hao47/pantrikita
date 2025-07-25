@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pantrikita/feature/scan/presentation/widgets/dropdown_category.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -8,18 +9,40 @@ import '../../../../core/theme/text_style.dart';
 import '../../../../core/util/validator/validator.dart';
 import '../../../../core/widgets/button.dart';
 import '../../../../core/widgets/custom_textformfield.dart';
+import '../bloc/scan_bloc.dart';
 
+class ScanManual extends StatefulWidget {
+  ScanManual({super.key});
 
-class ScanManual extends StatelessWidget {
-   ScanManual({super.key});
+  @override
+  State<ScanManual> createState() => _ScanManualState();
+}
 
-
-
+class _ScanManualState extends State<ScanManual> {
+  final Map<int, String> _items = {
+    1: 'Fruit',
+    2: 'Vegetable',
+    3: 'Meat',
+    4: 'Dairy',
+    5: 'Grains',
+    6: 'Seafood',
+  };
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _itemNameController = TextEditingController();
+
   final TextEditingController _expiringDateController = TextEditingController();
+
   final TextEditingController _locationController = TextEditingController();
+
+  @override
+  void dispose() {
+    _itemNameController.dispose();
+    _expiringDateController.dispose();
+    _locationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +51,7 @@ class ScanManual extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            margin: const EdgeInsets.symmetric( vertical: 20),
+            margin: const EdgeInsets.symmetric(vertical: 20),
             padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
             decoration: BoxDecoration(
               color: ColorValue.whiteColor,
@@ -97,25 +120,49 @@ class ScanManual extends StatelessWidget {
           ),
 
           const SizedBox(height: 10),
-          MyButton(
-            widget: Text(
-              "Add to Pantry",
-              style: tsBodyMediumMedium(ColorValue.whiteColor),
-            ),
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
+
+          BlocConsumer<ScanBloc, ScanState>(
+            listener: (context, state) {
+              print(state.scanStatus);
+              if (state.scanStatus == ScanStatus.success) {
+                // context.read<ScanBloc>().add(
+                //   GetChangeStatusEvent(status: ScanStatus.initial),
+                // );
+
+                print("halo");
                 showTopSnackBar(
                   Overlay.of(context),
-                  const CustomSnackBar.success(
-                    message: 'Successfully added an item to pantry!',
+                  CustomSnackBar.success(
+                    message: 'anda berhasil menambahkan pantry',
                   ),
                 );
-
-              }
+              } else if (state.scanStatus == ScanStatus.error) {}
             },
-            height: 50,
-            colorbtn: WidgetStateProperty.all<Color>(ColorValue.primary),
-            width: double.infinity,
+            builder: (context, state) {
+              return MyButton(
+                widget: state.scanStatus == ScanStatus.loading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : Text(
+                        "Scan",
+                        style: tsBodyMediumMedium(ColorValue.whiteColor),
+                      ),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    context.read<ScanBloc>().add(
+                      GetScanEvent(
+                        item_name: _itemNameController.text,
+                        expiring_date: _expiringDateController.text,
+                        category: _items[state.category_id]!,
+                        location: _locationController.text,
+                      ),
+                    );
+                  }
+                },
+                height: 50,
+                colorbtn: WidgetStateProperty.all<Color>(ColorValue.primary),
+                width: double.infinity,
+              );
+            },
           ),
         ],
       ),

@@ -10,6 +10,7 @@ import '../../../../core/theme/text_style.dart';
 import '../../../../core/util/validator/validator.dart';
 import '../../../../core/widgets/button.dart';
 import '../../../../core/widgets/custom_textformfield.dart';
+import '../../../../injection-container.dart';
 import '../bloc/scan_bloc.dart';
 
 class ScanPage extends StatefulWidget {
@@ -20,30 +21,7 @@ class ScanPage extends StatefulWidget {
 }
 
 class _ScanPageState extends State<ScanPage> {
-  int selectedTab = 0;
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _itemNameController = TextEditingController();
-  final TextEditingController _expiringDateController = TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
-
-  final Map<int, String> _categories = {
-    1: 'Fruit',
-    2: 'Vegetable',
-    3: 'Meat',
-    4: 'Dairy',
-    5: 'Grains',
-    6: 'Seafood',
-  };
-  int _selectedCategoryId = 4;
-
-  @override
-  void dispose() {
-    _itemNameController.dispose();
-    _expiringDateController.dispose();
-    _locationController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +37,7 @@ class _ScanPageState extends State<ScanPage> {
               vertical: 20,
             ),
             child: BlocProvider(
-              create: (context) => ScanBloc(),
+              create: (_) => sl.get<ScanBloc>()..add(GetInitialTabEvent()),
               child: BlocBuilder<ScanBloc, ScanState>(
                 builder: (context, state) {
                   final data = state.change_tab_index;
@@ -72,6 +50,10 @@ class _ScanPageState extends State<ScanPage> {
                           style: tsTitleMediumBold(ColorValue.black),
                         ),
                       ),
+
+                      Text("Item Name", style: tsBodySmallMedium(ColorValue.black)),
+                      const SizedBox(height: 10),
+
 
 
                       ScanTab(onValueChanged: (v) {
@@ -97,42 +79,6 @@ class _ScanPageState extends State<ScanPage> {
     );
   }
 
-  Widget _buildTabButton({
-    required int index,
-    required IconData icon,
-    required String label,
-  }) {
-    final isSelected = selectedTab == index;
-    return Expanded(
-      child: GestureDetector(
-        onTap: () => setState(() => selectedTab = index),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          decoration: BoxDecoration(
-            color: isSelected ? ColorValue.primary : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 16,
-                color: isSelected ? ColorValue.whiteColor : ColorValue.grayDark,
-              ),
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: tsBodySmallMedium(
-                  isSelected ? ColorValue.whiteColor : ColorValue.grayDark,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
 
   }

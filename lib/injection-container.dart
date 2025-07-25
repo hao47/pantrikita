@@ -18,6 +18,9 @@ import 'feature/profile/data/data_sources/remote/profile_remote_data_sources.dar
 import 'feature/profile/data/repositories/profile_repository.dart';
 import 'feature/profile/presentation/bloc/profile_bloc.dart';
 import 'feature/auth/presentation/bloc/register_bloc.dart';
+import 'feature/scan/data/data_sources/remote/scan_remote_data_sources.dart';
+import 'feature/scan/data/repositories/scan_repository.dart';
+import 'feature/scan/presentation/bloc/scan_bloc.dart';
 
 final sl = GetIt.I;
 
@@ -28,6 +31,8 @@ Future<void> initializeServiceLocator() async {
   _initializeProfileFeature();
   _initializePantryFeature();
   _initializeHomeFeature();
+  // _initializeHomeFeature();
+  _initializeScanFeature();
 
   /// Core
   ///
@@ -130,6 +135,34 @@ void _initializeHomeFeature() {
   // repository
   sl.registerLazySingleton<HomeRepository>(
         () => HomeRepositoryImpl(
+      remoteDataSource: sl(),
+      networkInfo: sl(),
+      localStorage: sl(),
+    ),
+  );
+
+
+}
+
+
+void _initializeScanFeature() {
+  // bloc
+  sl.registerFactory(
+        () => ScanBloc(
+      repository: sl(),
+    ),
+  );
+
+  // data sources
+  sl.registerLazySingleton<ScanRemoteDataSource>(
+        () => ScanRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+
+  // repository
+  sl.registerLazySingleton<ScanRepository>(
+        () => ScanRepositoryImpl(
       remoteDataSource: sl(),
       networkInfo: sl(),
       localStorage: sl(),

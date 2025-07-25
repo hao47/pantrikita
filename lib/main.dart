@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         title: 'PantriKita',
         debugShowCheckedModeBanner: false,
-        home: ScanPage(),
+        home: BottomNavigation(),
       ),
     );
   }
