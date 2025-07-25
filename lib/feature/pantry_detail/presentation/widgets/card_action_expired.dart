@@ -59,9 +59,11 @@ class CardActionExpired extends StatelessWidget {
               InkWell(
                 onTap: () {
                   context.read<PantryDetailBloc>().add(PutPantryDetailEvent(pantryId: pantryId, status: 'compost'));
-                  SnackBar(
-                    content: Text('Item marked as composted successfully!'),
-                    backgroundColor: ColorValue.green,
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Item marked as composted successfully!'),
+                      backgroundColor: ColorValue.green,
+                    ),
                   );
                   navigatorPop(context);
                 },
@@ -89,9 +91,11 @@ class CardActionExpired extends StatelessWidget {
               InkWell(
                 onTap: () {
                   context.read<PantryDetailBloc>().add(PutPantryDetailEvent(pantryId: pantryId, status: 'thrown'));
-                  SnackBar(
-                    content: Text('Item marked as thrown away successfully!'),
-                    backgroundColor: ColorValue.red,
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Item marked as thrown away successfully!'),
+                      backgroundColor: ColorValue.red,
+                    ),
                   );
                   navigatorPop(context);
                 },
