@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pantrikita/feature/scan/presentation/widgets/scan_camera.dart';
 import 'package:pantrikita/feature/scan/presentation/widgets/scan_manual.dart';
 
 
@@ -15,7 +16,7 @@ class ScanContent extends StatelessWidget {
     if (index == 1) {
       return Container();
     } else if (index == 2) {
-      return Container();
+      return ScanCamera();
     } else if(index == 3){
 
       return ScanManual();

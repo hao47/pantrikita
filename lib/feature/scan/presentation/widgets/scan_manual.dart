@@ -46,126 +46,159 @@ class _ScanManualState extends State<ScanManual> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 20),
-            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-            decoration: BoxDecoration(
-              color: ColorValue.whiteColor,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: ColorValue.gray.withOpacity(0.3)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Item Details",
-                  style: tsTitleMediumSemibold(ColorValue.black),
+    return BlocBuilder<ScanBloc, ScanState>(
+      builder: (context, state) {
+
+        if (_itemNameController.text.isEmpty && state.item_name.isNotEmpty) {
+          _itemNameController.text = state.item_name;
+        }
+        if (_expiringDateController.text.isEmpty &&
+            state.expiring_date.isNotEmpty) {
+          _expiringDateController.text = state.expiring_date;
+        }
+        if (_locationController.text.isEmpty && state.location.isNotEmpty) {
+          _locationController.text = state.location;
+        }
+
+        return Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 40,
+                  horizontal: 20,
                 ),
-                Text(
-                  "Enter your food item information",
-                  style: tsLabelLargeMedium(ColorValue.grayDark),
+                decoration: BoxDecoration(
+                  color: ColorValue.whiteColor,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: ColorValue.gray.withOpacity(0.3)),
                 ),
-                const SizedBox(height: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Item Details",
+                      style: tsTitleMediumSemibold(ColorValue.black),
+                    ),
+                    Text(
+                      "Enter your food item information",
+                      style: tsLabelLargeMedium(ColorValue.grayDark),
+                    ),
+                    const SizedBox(height: 20),
 
-                Text("Item Name", style: tsBodySmallMedium(ColorValue.black)),
-                const SizedBox(height: 10),
-                CustomTextFormField(
-                  label: "e.g., Organic Milk",
-                  controller: _itemNameController,
-                  textInputType: TextInputType.text,
-                  validator: (value) => Validator.emptyValidator(
-                    value: value,
-                    message: "Item name must be filled",
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-                Text("Category", style: tsBodySmallMedium(ColorValue.black)),
-                const SizedBox(height: 10),
-                DropdownCategory(),
-
-                const SizedBox(height: 20),
-                Text("Expiry Date", style: tsBodySmallMedium(ColorValue.black)),
-                const SizedBox(height: 10),
-                CustomTextFormField(
-                  label: "Pick a date",
-                  controller: _expiringDateController,
-                  textInputType: TextInputType.datetime,
-                  readOnly: true,
-                  validator: (value) => Validator.emptyValidator(
-                    value: value,
-                    message: "Expiry date must be filled",
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-                Text("Stored At", style: tsBodySmallMedium(ColorValue.black)),
-                const SizedBox(height: 10),
-                CustomTextFormField(
-                  label: "e.g., Fridge",
-                  controller: _locationController,
-                  textInputType: TextInputType.text,
-                  validator: (value) => Validator.emptyValidator(
-                    value: value,
-                    message: "Stored at must be filled",
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 10),
-
-          BlocConsumer<ScanBloc, ScanState>(
-            listener: (context, state) {
-              print(state.scanStatus);
-              if (state.scanStatus == ScanStatus.success) {
-                // context.read<ScanBloc>().add(
-                //   GetChangeStatusEvent(status: ScanStatus.initial),
-                // );
-
-                print("halo");
-                showTopSnackBar(
-                  Overlay.of(context),
-                  CustomSnackBar.success(
-                    message: 'anda berhasil menambahkan pantry',
-                  ),
-                );
-              } else if (state.scanStatus == ScanStatus.error) {}
-            },
-            builder: (context, state) {
-              return MyButton(
-                widget: state.scanStatus == ScanStatus.loading
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : Text(
-                        "Scan",
-                        style: tsBodyMediumMedium(ColorValue.whiteColor),
+                    Text(
+                      "Item Name",
+                      style: tsBodySmallMedium(ColorValue.black),
+                    ),
+                    const SizedBox(height: 10),
+                    CustomTextFormField(
+                      label: "e.g., Organic Milk",
+                      controller: _itemNameController,
+                      textInputType: TextInputType.text,
+                      validator: (value) => Validator.emptyValidator(
+                        value: value,
+                        message: "Item name must be filled",
                       ),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    context.read<ScanBloc>().add(
-                      GetScanEvent(
-                        item_name: _itemNameController.text,
-                        expiring_date: _expiringDateController.text,
-                        category: _items[state.category_id]!,
-                        location: _locationController.text,
+                    ),
+
+                    const SizedBox(height: 20),
+                    Text(
+                      "Category",
+                      style: tsBodySmallMedium(ColorValue.black),
+                    ),
+                    const SizedBox(height: 10),
+                    DropdownCategory(),
+
+                    const SizedBox(height: 20),
+                    Text(
+                      "Expiry Date",
+                      style: tsBodySmallMedium(ColorValue.black),
+                    ),
+                    const SizedBox(height: 10),
+                    CustomTextFormField(
+                      label: "Pick a date",
+                      controller: _expiringDateController,
+                      textInputType: TextInputType.datetime,
+                      readOnly: true,
+                      validator: (value) => Validator.emptyValidator(
+                        value: value,
+                        message: "Expiry date must be filled",
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+                    Text(
+                      "Stored At",
+                      style: tsBodySmallMedium(ColorValue.black),
+                    ),
+                    const SizedBox(height: 10),
+                    CustomTextFormField(
+                      label: "e.g., Fridge",
+                      controller: _locationController,
+                      textInputType: TextInputType.text,
+                      validator: (value) => Validator.emptyValidator(
+                        value: value,
+                        message: "Stored at must be filled",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              BlocConsumer<ScanBloc, ScanState>(
+                listener: (context, state) {
+                  print(state.scanStatus);
+                  if (state.scanStatus == ScanStatus.success) {
+                    // context.read<ScanBloc>().add(
+                    //   GetChangeStatusEvent(status: ScanStatus.initial),
+                    // );
+
+                    print("halo");
+                    showTopSnackBar(
+                      Overlay.of(context),
+                      CustomSnackBar.success(
+                        message: 'anda berhasil menambahkan pantry',
                       ),
                     );
-                  }
+                  } else if (state.scanStatus == ScanStatus.error) {}
                 },
-                height: 50,
-                colorbtn: WidgetStateProperty.all<Color>(ColorValue.primary),
-                width: double.infinity,
-              );
-            },
+                builder: (context, state) {
+                  return MyButton(
+                    widget: state.scanStatus == ScanStatus.loading
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Text(
+                            "Scan",
+                            style: tsBodyMediumMedium(ColorValue.whiteColor),
+                          ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        context.read<ScanBloc>().add(
+                          GetScanEvent(
+                            item_name: _itemNameController.text,
+                            expiring_date: _expiringDateController.text,
+                            category: _items[state.category_id]!,
+                            location: _locationController.text,
+                          ),
+                        );
+                      }
+                    },
+                    height: 50,
+                    colorbtn: WidgetStateProperty.all<Color>(
+                      ColorValue.primary,
+                    ),
+                    width: double.infinity,
+                  );
+                },
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

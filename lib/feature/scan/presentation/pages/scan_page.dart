@@ -21,8 +21,6 @@ class ScanPage extends StatefulWidget {
 }
 
 class _ScanPageState extends State<ScanPage> {
-
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -51,23 +49,22 @@ class _ScanPageState extends State<ScanPage> {
                         ),
                       ),
 
-                      Text("Item Name", style: tsBodySmallMedium(ColorValue.black)),
+                      Text(
+                        "Item Name",
+                        style: tsBodySmallMedium(ColorValue.black),
+                      ),
                       const SizedBox(height: 10),
 
+                      ScanTab(
+                        onValueChanged: (v) {
+                          print(v);
+                          context.read<ScanBloc>().add(
+                            GetTabIndexEvent(change_tab: v),
+                          );
+                        },
+                      ),
 
-
-                      ScanTab(onValueChanged: (v) {
-                        print(v);
-                        context.read<ScanBloc>().add(GetTabIndexEvent(change_tab: v));
-                      }),
-
-
-                      ScanContent(
-                        index: data,
-                      )
-
-
-
+                      ScanContent(index: data),
                     ],
                   );
                 },
@@ -78,125 +75,60 @@ class _ScanPageState extends State<ScanPage> {
       ),
     );
   }
+}
 
-
-
-  }
-
-  // Widget _buildCameraScreen() {
-  //   return Container(
-  //     margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-  //     padding: const EdgeInsets.all(40),
-  //     decoration: BoxDecoration(
-  //       color: ColorValue.whiteColor,
-  //       borderRadius: BorderRadius.circular(12),
-  //       border: Border.all(color: ColorValue.gray.withOpacity(0.3)),
-  //     ),
-  //     child: Column(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: [
-  //         Container(
-  //           decoration: BoxDecoration(
-  //             color: ColorValue.greenStatusTransparant,
-  //             borderRadius: BorderRadius.circular(15),
-  //           ),
-  //           padding: const EdgeInsets.all(20),
-  //           child: Icon(
-  //             Icons.camera_alt_outlined,
-  //             size: 50,
-  //             color: ColorValue.green,
-  //           ),
-  //         ),
-  //         const SizedBox(height: 20),
-  //         Text("AI Recognition", style: tsBodyLargeMedium(ColorValue.black)),
-  //         const SizedBox(height: 20),
-  //         Text(
-  //           "Take a photo let AI identify your food item automatically",
-  //           style: tsBodySmallMedium(ColorValue.gray),
-  //           textAlign: TextAlign.center,
-  //         ),
-  //         const SizedBox(height: 20),
-  //         MyButton(
-  //           widget: Text(
-  //             "Take Photo",
-  //             style: tsBodySmallMedium(ColorValue.whiteColor),
-  //           ),
-  //           height: 55,
-  //           onPressed: () {
-  //             showTopSnackBar(
-  //               Overlay.of(context),
-  //               const CustomSnackBar.info(
-  //                 message: "Camera feature coming soon!",
-  //               ),
-  //             );
-  //           },
-  //           colorbtn: WidgetStateProperty.all<Color>(ColorValue.primary),
-  //           width: 150,
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-  //
-  // Widget _buildBarcodeScreen() {
-  //   return Container(
-  //     margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-  //     padding: const EdgeInsets.all(40),
-  //     decoration: BoxDecoration(
-  //       color: ColorValue.whiteColor,
-  //       borderRadius: BorderRadius.circular(12),
-  //       border: Border.all(color: ColorValue.gray.withOpacity(0.3)),
-  //     ),
-  //     child: Column(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: [
-  //         Container(
-  //           decoration: BoxDecoration(
-  //             color: ColorValue.blueTransparant,
-  //             borderRadius: BorderRadius.circular(15),
-  //           ),
-  //           padding: const EdgeInsets.all(20),
-  //           child: Icon(
-  //             Icons.qr_code_scanner,
-  //             size: 50,
-  //             color: ColorValue.blue,
-  //           ),
-  //         ),
-  //         const SizedBox(height: 20),
-  //         Text("Scan Barcode", style: tsBodyLargeMedium(ColorValue.black)),
-  //         const SizedBox(height: 20),
-  //         Text(
-  //           "Point your camera at the product barcode for instant recognition",
-  //           style: tsBodySmallMedium(ColorValue.gray),
-  //           textAlign: TextAlign.center,
-  //         ),
-  //         const SizedBox(height: 20),
-  //         MyButton(
-  //           widget: Text(
-  //             "Start Scanning",
-  //             style: tsBodySmallMedium(ColorValue.whiteColor),
-  //           ),
-  //           height: 55,
-  //           onPressed: () {
-  //             showTopSnackBar(
-  //               Overlay.of(context),
-  //               const CustomSnackBar.info(
-  //                 message: "Barcode scanner coming soon!",
-  //               ),
-  //             );
-  //           },
-  //           colorbtn: WidgetStateProperty.all<Color>(ColorValue.primary),
-  //           width: 150,
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-
-
-
-
-
-
-
+//
+// Widget _buildBarcodeScreen() {
+//   return Container(
+//     margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+//     padding: const EdgeInsets.all(40),
+//     decoration: BoxDecoration(
+//       color: ColorValue.whiteColor,
+//       borderRadius: BorderRadius.circular(12),
+//       border: Border.all(color: ColorValue.gray.withOpacity(0.3)),
+//     ),
+//     child: Column(
+//       mainAxisSize: MainAxisSize.min,
+//       children: [
+//         Container(
+//           decoration: BoxDecoration(
+//             color: ColorValue.blueTransparant,
+//             borderRadius: BorderRadius.circular(15),
+//           ),
+//           padding: const EdgeInsets.all(20),
+//           child: Icon(
+//             Icons.qr_code_scanner,
+//             size: 50,
+//             color: ColorValue.blue,
+//           ),
+//         ),
+//         const SizedBox(height: 20),
+//         Text("Scan Barcode", style: tsBodyLargeMedium(ColorValue.black)),
+//         const SizedBox(height: 20),
+//         Text(
+//           "Point your camera at the product barcode for instant recognition",
+//           style: tsBodySmallMedium(ColorValue.gray),
+//           textAlign: TextAlign.center,
+//         ),
+//         const SizedBox(height: 20),
+//         MyButton(
+//           widget: Text(
+//             "Start Scanning",
+//             style: tsBodySmallMedium(ColorValue.whiteColor),
+//           ),
+//           height: 55,
+//           onPressed: () {
+//             showTopSnackBar(
+//               Overlay.of(context),
+//               const CustomSnackBar.info(
+//                 message: "Barcode scanner coming soon!",
+//               ),
+//             );
+//           },
+//           colorbtn: WidgetStateProperty.all<Color>(ColorValue.primary),
+//           width: 150,
+//         ),
+//       ],
+//     ),
+//   );
+// }

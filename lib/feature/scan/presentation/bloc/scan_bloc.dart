@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:pantrikita/feature/scan/domain/entities/identify.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../auth/domain/entities/register.dart';
@@ -25,6 +27,8 @@ class ScanBloc extends Bloc<ScanEvent, ScanState> {
     on<GetCategoryIdEvent>(_onChangeCategoryId);
     on<GetInitialTabEvent>(_onInitialIndex);
     on<GetScanEvent>(_getScanEventHandler);
+    on<PhotoClasifier>(_photoClassifierHandler);
+    on<GetScanSaveStateEvent>(_getSaveState);
 
   }
 
@@ -48,6 +52,15 @@ class ScanBloc extends Bloc<ScanEvent, ScanState> {
     emit(state.copyWith(category_id: event.categoryId));
   }
 
+
+  Future<void> _getSaveState(
+      GetScanSaveStateEvent event,
+      Emitter<ScanState> emit,
+      ) async {
+    emit(state.copyWith(item_name: event.item_name,location: event.location,category: event.category,expiring_date: event.expiring_date,category_id: event.categoryId));
+
+
+  }
 
   Future<void> _getScanEventHandler(
       GetScanEvent event,
@@ -89,5 +102,39 @@ class ScanBloc extends Bloc<ScanEvent, ScanState> {
       },
     );
   }
+
+
+  Future<void> _photoClassifierHandler(
+      PhotoClasifier event,
+      Emitter emit,
+      ) async {
+    final imagePicker = ImagePicker();
+    final image = await imagePicker.pickImage(
+      source: ImageSource.camera ,
+    );
+
+    emit(state.copyWith(identifyStatus: IdentifyStatus.loading));
+
+    final either = await _repository.postIdentify(image!);
+
+
+    await either.fold(
+          (failure) async {
+        emit(
+          state.copyWith(
+            identifyStatus: IdentifyStatus.error,
+            message: mapFailureToMessage(failure),
+          ),
+        );
+      },
+          (data) {
+        emit(state.copyWith(identify: data, identifyStatus: IdentifyStatus.success));
+      },
+    );
+
+
+
+  }
+
 
 }

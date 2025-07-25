@@ -18,6 +18,7 @@ class DropdownCategory extends StatelessWidget {
     6: 'Seafood',
   };
 
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ScanBloc, ScanState>(
@@ -34,13 +35,7 @@ class DropdownCategory extends StatelessWidget {
             child: DropdownButton<int>(
               dropdownColor: ColorValue.whiteColor,
               value: data,
-              onChanged: (int? newValue) {
-
-                context.read<ScanBloc>().add(
-                  GetCategoryIdEvent(categoryId: newValue!),
-                );
-
-              },
+              onChanged: (int? newValue) {},
               items: _items.entries.map<DropdownMenuItem<int>>((entry) {
                 return DropdownMenuItem<int>(
                   value: entry.key,

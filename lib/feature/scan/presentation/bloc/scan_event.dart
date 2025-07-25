@@ -38,3 +38,23 @@ class GetChangeStatusEvent extends ScanEvent {
 
 
 class GetInitialTabEvent extends ScanEvent {}
+
+class PhotoClasifier extends ScanEvent {}
+
+
+class GetScanSaveStateEvent extends ScanEvent {
+  final String item_name;
+  final String category;
+  final String expiring_date;
+  final String location;
+  final int categoryId;
+
+  GetScanSaveStateEvent({
+    required this.item_name,
+    required this.category,
+    required this.expiring_date,
+    required this.location,
+    required this.categoryId,
+  });
+}
+
