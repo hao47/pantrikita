@@ -7,6 +7,8 @@ import '../../../../core/api/api.dart';
 import '../../../../core/theme/color_value.dart';
 import '../../../../core/theme/text_style.dart';
 import '../../feature/home/domain/entities/home.dart';
+import '../../feature/pantry_detail/presentation/pages/pantry_detail_page.dart';
+import '../route/navigator.dart';
 import 'card_item.dart';
 
 class ListItemWidget extends StatelessWidget {
@@ -39,7 +41,12 @@ class ListItemWidget extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final item = items[index];
-        return CardItem(icon: item.icon,textCategory: item.category,textLocation: item.location,status: item.expired.statusColor,textName: item.name,textStatus: item.expired.statusText,);
+        return InkWell(
+            onTap: () {
+
+              navigatorPush(context, PantryDetailPage(pantryId: item.id));
+            },
+            child: CardItem(icon: item.icon,textCategory: item.category,textLocation: item.location,status: item.expired.statusColor,textName: item.name,textStatus: item.expired.statusText,));
       },
       separatorBuilder: (context, index) => SizedBox(height: 10),
     );
