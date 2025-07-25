@@ -32,6 +32,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
         final model = await remoteDataSource.getProfile(token);
 
+        print("✅ Profile API success, saving to cache");
         await box.write("cached_profile", profileToJson(model));
 
         return Right(model);
@@ -53,6 +54,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final cachedData = await box.read("cached_profile");
 
       if (cachedData != null) {
+        print("✅ Profile cache found, returning cached data");
         final cachedProfile = profileFromJson(cachedData);
         return Right(cachedProfile);
       } else {

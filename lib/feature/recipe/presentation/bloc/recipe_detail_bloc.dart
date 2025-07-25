@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/error/failures.dart';
 import '../../data/repositories/recipe_detail_repository.dart';
 import '../../domain/entities/recipe_detail.dart';
@@ -29,7 +30,6 @@ class RecipeDetailBloc extends Bloc<RecipeDetailEvent, RecipeDetailState> {
 
       await either.fold(
             (failure) async {
-          print("❌ Recipe Detail repository returned failure: ${failure.runtimeType}");
 
           emit(RecipeDetailFailure(
             message: mapFailureToMessage(failure),
@@ -37,7 +37,6 @@ class RecipeDetailBloc extends Bloc<RecipeDetailEvent, RecipeDetailState> {
           ));
         },
             (data) async {
-          print("✅ Recipe Detail repository returned data: ${data.data.title}");
 
           emit(RecipeDetailSuccess(
             recipeDetail: data,
@@ -45,7 +44,6 @@ class RecipeDetailBloc extends Bloc<RecipeDetailEvent, RecipeDetailState> {
         },
       );
     } catch (e) {
-      print("💥 Recipe Detail BLoC error: $e");
       emit(RecipeDetailFailure(
         message: "An unexpected error occurred: $e",
         failureType: "UnknownFailure",
@@ -58,7 +56,6 @@ class RecipeDetailBloc extends Bloc<RecipeDetailEvent, RecipeDetailState> {
       Emitter<RecipeDetailState> emit,
       ) async {
     try {
-      print("🔄 Updating ingredient: ${event.ingredientName} to ${event.isChecked}");
 
       final either = await _repository.updateIngredientStatus(
         event.recipeId,
@@ -68,7 +65,6 @@ class RecipeDetailBloc extends Bloc<RecipeDetailEvent, RecipeDetailState> {
 
       await either.fold(
             (failure) async {
-          print("❌ Update Ingredient repository returned failure: ${failure.runtimeType}");
 
           emit(RecipeDetailIngredientUpdateFailure(
             message: mapFailureToMessage(failure),
@@ -76,7 +72,6 @@ class RecipeDetailBloc extends Bloc<RecipeDetailEvent, RecipeDetailState> {
           ));
         },
             (success) async {
-          print("✅ Update Ingredient repository returned success");
 
           if (state is RecipeDetailSuccess) {
             final currentState = state as RecipeDetailSuccess;
@@ -93,7 +88,6 @@ class RecipeDetailBloc extends Bloc<RecipeDetailEvent, RecipeDetailState> {
         },
       );
     } catch (e) {
-      print("💥 Update Ingredient BLoC error: $e");
       emit(RecipeDetailIngredientUpdateFailure(
         message: "An unexpected error occurred: $e",
         failureType: "UnknownFailure",
