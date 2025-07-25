@@ -1,7 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Api {
-  static String get url => 'https://dfc4c703a89b.ngrok-free.app' ?? 'default_value';
+  static String get url => dotenv.env['BASE_URL_API'] ?? 'localhost:8000';
   static String get baseUrlImage => dotenv.env['BASE_URL_IMAGE'] ?? 'default_value';
   static Map<String, String> headers() {
     return {
