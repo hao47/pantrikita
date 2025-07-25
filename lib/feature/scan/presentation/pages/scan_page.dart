@@ -9,10 +9,10 @@ class ScanPage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: ColorValue.backgroundColor,
-      body: SafeArea(
-          child: Text("ScanPage")
-      )
+        backgroundColor: ColorValue.backgroundColor,
+        body: SafeArea(
+            child: Text("ScanPage")
+        )
     );
   }
 }
