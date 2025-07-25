@@ -24,7 +24,6 @@ class PantryRemoteDataSourceImpl implements PantryRemoteDataSource {
       onTimeout: () => throw const TimeOutException(),
     );
 
-    print(response.body);
     if (response.statusCode == 200) {
       return pantryFromJson(response.body);
     } else {
