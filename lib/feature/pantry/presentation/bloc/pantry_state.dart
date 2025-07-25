@@ -9,6 +9,7 @@ class PantryState extends Equatable {
     this.filterStatus = 'all_status',
     this.filterSort = 'expiry_date',
     this.pantryStatus = PantryStatus.initial,
+    this.pantryResponse,
     this.failureMessage = '',
     this.failureType = '',
   });
@@ -19,9 +20,10 @@ class PantryState extends Equatable {
   final String filterSort;
 
   final PantryStatus pantryStatus;
+  final Pantry? pantryResponse;
   final String failureMessage;
   final String failureType;
-
+  
 
   PantryState copyWith({
     String? filterSearch,
@@ -29,6 +31,7 @@ class PantryState extends Equatable {
     String? filterStatus,
     String? filterSort,
     PantryStatus? pantryStatus,
+    Pantry? pantryResponse,
     String? failureMessage,
     String? failureType,
   }) {
@@ -38,6 +41,7 @@ class PantryState extends Equatable {
       filterStatus: filterStatus ?? this.filterStatus,
       filterSort: filterSort ?? this.filterSort,
       pantryStatus: pantryStatus ?? this.pantryStatus,
+      pantryResponse: pantryResponse ?? this.pantryResponse,
       failureMessage: failureMessage ?? this.failureMessage,
       failureType: failureType ?? this.failureType,
     );
@@ -50,6 +54,7 @@ class PantryState extends Equatable {
     filterStatus,
     filterSort,
     pantryStatus,
+    pantryResponse ?? Pantry(data: Data(totalItems: TotalItems(total: 0, fresh: 0, expiring: 0, expired: 0), items: [])),
     failureMessage,
     failureType,
   ];

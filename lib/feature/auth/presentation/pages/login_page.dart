@@ -82,7 +82,7 @@ class LoginPage extends StatelessWidget {
                       BlocConsumer<LoginBloc, LoginState>(
                         listener: (context, state) {
                           if (state is LoginSuccess) {
-                            navigatorPushAndRemove(context, BottomNavigation());
+                            navigatorPushAndRemoveAll(context, BottomNavigation());
 
                           } else if (state is LoginFailure) {
                             showTopSnackBar(
@@ -138,7 +138,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         SizedBox(width: 5),
                         InkWell(
-                          onTap: () => navigatorPush(context, RegisterPage())
+                          onTap: () => navigatorReplacement(context, RegisterPage())
 
                           ,
                           child: Text(

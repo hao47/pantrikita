@@ -29,6 +29,18 @@ void navigatorPushAndRemove(BuildContext context, Widget widget) {
   );
 }
 
+void navigatorPushAndRemoveAll(BuildContext context, Widget widget) {
+  Navigator.pushAndRemoveUntil(
+    context,
+    PageTransition(
+      type: PageTransitionType.fade,
+      child: widget,
+    ),
+        (_) => false,
+  );
+}
+
+
 void navigatorPop(BuildContext context) {
   Navigator.pop(context);
 }

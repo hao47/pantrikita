@@ -1,121 +1,44 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pantrikita/core/theme/color_value.dart';
-import 'package:pantrikita/core/theme/text_style.dart';
-import 'package:pantrikita/core/widgets/card_item.dart';
-import 'package:pantrikita/feature/pantry/data/dropdown_data/category_dropdown_data.dart';
-import 'package:pantrikita/feature/pantry/data/dropdown_data/sort_dropdown_data.dart';
-import 'package:pantrikita/feature/pantry/data/dropdown_data/status_dropdown_data.dart';
+import 'package:pantrikita/core/widgets/custom_loading.dart';
 import 'package:pantrikita/feature/pantry/presentation/bloc/pantry_bloc.dart';
-import 'package:pantrikita/feature/pantry/presentation/widgets/card_no_item.dart';
-import 'package:pantrikita/feature/pantry/presentation/widgets/card_summary_pantry.dart';
-import 'package:pantrikita/feature/pantry/presentation/widgets/custom_search_bar.dart';
-import 'package:pantrikita/feature/pantry/presentation/widgets/dropdown_filter_pantry.dart';
+import 'package:pantrikita/feature/pantry/presentation/component/pantry_content.dart';
+import 'package:pantrikita/feature/pantry/presentation/component/pantry_error.dart';
 
-class PantryPage extends StatelessWidget {
+
+import '../../../../core/theme/color_value.dart';
+import '../../../../injection-container.dart';
+
+class PantryPage extends StatefulWidget {
   const PantryPage({super.key});
 
   @override
+  State<PantryPage> createState() => _PantryPageState();
+}
+
+class _PantryPageState extends State<PantryPage>
+    with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    super.build(context);
 
-    final searchController = TextEditingController();
-
-    return Scaffold(
-      backgroundColor: ColorValue.backgroundColor,
-      body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              width: screenWidth,
-              margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: 20),
-              child: Column(
-                children: [
-                  Center(child: Text('Pantry', style: tsBodyLargeSemibold(ColorValue.black))),
-
-                  SizedBox(height: 20),
-
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CardSummaryPantry(textTitle: 'Total', totalCount: 8, countColor: ColorValue.black),
-                        CardSummaryPantry(textTitle: 'Fresh', totalCount: 3, countColor: ColorValue.green),
-                        CardSummaryPantry(textTitle: 'Expiring', totalCount: 2, countColor: ColorValue.primary),
-                        CardSummaryPantry(textTitle: 'Expired', totalCount: 4, countColor: ColorValue.red),
-                      ]
-                  ),
-
-                  SizedBox(height: 20),
-
-                  CustomSearchBar(
-                      hintName: 'Search Items...',
-                      screenHeight: screenHeight,
-                      screenWidth: screenWidth,
-                      onSearch: (query) {
-                        searchController.text = query;
-                        context.read<PantryBloc>().add(GetFilterSearchEvent(filterSearch: query));
-                      },
-                      onClearSearch: () {
-                        searchController.clear();
-                        context.read<PantryBloc>().add(GetFilterSearchEvent(filterSearch: ''));
-                      },
-                      searchController: searchController
-                  ),
-
-                  SizedBox(height: 20),
-
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        BlocBuilder<PantryBloc, PantryState>(builder: (context, state) {
-                          return DropdownFilterPantry(
-                            items: categoryDropdownData,
-                            selectedValue: state.filterCategory,
-                            onChanged: (value) {
-                              context.read<PantryBloc>().add(GetFilterCategoryEvent(filterCategory: value));
-                            },
-                          );
-                        }),
-
-                        BlocBuilder<PantryBloc, PantryState>(builder: (context, state) {
-                          return DropdownFilterPantry(
-                            items: statusDropdownData,
-                            selectedValue: state.filterStatus,
-                            onChanged: (value) {
-                              context.read<PantryBloc>().add(GetFilterStatusEvent(filterStatus: value));
-                            },
-                          );
-                        }),
-
-                        BlocBuilder<PantryBloc, PantryState>(builder: (context, state) {
-                          return DropdownFilterPantry(
-                            items: sortDropdownData,
-                            selectedValue: state.filterSort,
-                            onChanged: (value) {
-                              context.read<PantryBloc>().add(GetFilterSortEvent(filterSort: value));
-                            },
-                          );
-                        }),
-                      ]
-                  ),
-
-                  SizedBox(height: 20),
-
-                  CardNoItem(),
-
-                  SizedBox(height: 20),
-
-                  CardItem(textName: 'Susu', textCategory: 'Dairy', textLocation: "Refrigerator", textStatus: "expired", icon: '🥛', status: 'RED_TRANSPARENT'),
-
-                  SizedBox(height: 20)
-                ],
-              ),
-            ),
-          )
-      )
+    return BlocProvider(
+      create: (_) => sl.get<PantryBloc>()..add(GetPantryEvent()),
+      child: Scaffold(
+        backgroundColor: ColorValue.backgroundColor,
+        body: BlocBuilder<PantryBloc, PantryState>(
+          builder: (context, state) {
+            if (state.pantryStatus == PantryStatus.loading) return const CustomLoading();
+            if (state.pantryStatus == PantryStatus.failure) return PantryError(state: state);
+            if (state.pantryStatus == PantryStatus.success) return PantryContent(state: state);
+            return const SizedBox();
+          },
+        ),
+      ),
     );
   }
 }

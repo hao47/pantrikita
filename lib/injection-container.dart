@@ -6,6 +6,11 @@ import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pantrikita/feature/auth/data/data_sources/remote/auth_remote_data_sources.dart';
 import 'package:pantrikita/feature/auth/data/data_sources/repository/auth_repository.dart';
+import 'package:pantrikita/feature/pantry/data/data_sources/remote/pantry_remote_data_sources.dart';
+import 'package:pantrikita/feature/pantry/data/data_sources/repositories/pantry_repository.dart';
+import 'package:pantrikita/feature/pantry_detail/data/data_sources/remote/pantry_detail_remote_data_sources.dart';
+import 'package:pantrikita/feature/pantry_detail/data/data_sources/repositories/pantry_detail_repository.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/bloc/pantry_detail_bloc.dart';
 
 import 'core/util/local/local_storage.dart';
 import 'core/util/network/network_info.dart';
@@ -21,6 +26,12 @@ import 'feature/auth/presentation/bloc/register_bloc.dart';
 import 'feature/scan/data/data_sources/remote/scan_remote_data_sources.dart';
 import 'feature/scan/data/repositories/scan_repository.dart';
 import 'feature/scan/presentation/bloc/scan_bloc.dart';
+import 'feature/recipe/data/data_sources/remote/recipe_detail_remote_data_sources.dart';
+import 'feature/recipe/data/data_sources/remote/recipe_remote_data_sources.dart';
+import 'feature/recipe/data/repositories/recipe_detail_repository.dart';
+import 'feature/recipe/data/repositories/recipe_repository.dart';
+import 'feature/recipe/presentation/bloc/recipe_bloc.dart';
+import 'feature/recipe/presentation/bloc/recipe_detail_bloc.dart';
 
 final sl = GetIt.I;
 
@@ -29,8 +40,11 @@ Future<void> initializeServiceLocator() async {
 
   _initializeAuthFeature();
   _initializeProfileFeature();
+  _initializeRecipeFeature();
+  _initializeRecipeDetailFeature();
   _initializePantryFeature();
   _initializeHomeFeature();
+  _initializePantryDetailFeature();
   // _initializeHomeFeature();
   _initializeScanFeature();
 
@@ -116,6 +130,62 @@ void _initializeProfileFeature() {
 
 }
 
+void _initializeRecipeFeature() {
+  // bloc
+  sl.registerFactory(
+        () =>
+        RecipeBloc(
+          repository: sl(),
+        ),
+  );
+
+  // data sources
+  sl.registerLazySingleton<RecipeRemoteDataSource>(
+        () =>
+        RecipeRemoteDataSourceImpl(
+          client: sl(),
+        ),
+  );
+
+  // repository
+  sl.registerLazySingleton<RecipeRepository>(
+        () =>
+        RecipeRepositoryImpl(
+          remoteDataSource: sl(),
+          networkInfo: sl(),
+          localStorage: sl(),
+        ),
+  );
+}
+
+void _initializeRecipeDetailFeature() {
+  // bloc
+  sl.registerFactory(
+        () =>
+        RecipeDetailBloc(
+          repository: sl(),
+        ),
+  );
+
+  // data sources
+  sl.registerLazySingleton<RecipeDetailRemoteDataSource>(
+        () =>
+        RecipeDetailRemoteDataSourceImpl(
+          client: sl(),
+        ),
+  );
+
+  // repository
+  sl.registerLazySingleton<RecipeDetailRepository>(
+        () =>
+        RecipeDetailRepositoryImpl(
+          remoteDataSource: sl(),
+          networkInfo: sl(),
+          localStorage: sl(),
+        ),
+  );
+}
+
 
 void _initializeHomeFeature() {
   // bloc
@@ -175,8 +245,49 @@ void _initializeScanFeature() {
 void _initializePantryFeature() {
   // bloc
   sl.registerFactory(
-        () => PantryBloc(),
+        () => PantryBloc(
+      repository: sl(),
+    ),
+  );
+
+  // data sources
+  sl.registerLazySingleton<PantryRemoteDataSource>(
+        () => PantryRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+
+  // repository
+  sl.registerLazySingleton<PantryRepository>(
+        () => PantryRepositoryImpl(
+      remoteDataSource: sl(),
+      networkInfo: sl(),
+      localStorage: sl(),
+    ),
   );
 }
 
+void _initializePantryDetailFeature() {
+  // bloc
+  sl.registerFactory(
+        () => PantryDetailBloc(
+      repository: sl(),
+    ),
+  );
 
+  // data sources
+  sl.registerLazySingleton<PantryDetailRemoteDataSource>(
+        () => PantryDetailRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+
+  // repository
+  sl.registerLazySingleton<PantryDetailRepository>(
+        () => PantryDetailRepositoryImpl(
+      remoteDataSource: sl(),
+      networkInfo: sl(),
+      localStorage: sl(),
+    ),
+  );
+}
