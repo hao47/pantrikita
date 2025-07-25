@@ -38,7 +38,6 @@ class PantryBloc extends Bloc<PantryEvent, PantryState> {
 
       await either.fold(
             (failure) async {
-          print("❌ Pantry repository returned failure: ${failure.runtimeType}");
 
           emit(state.copyWith(
             pantryStatus: PantryStatus.failure,
@@ -47,8 +46,6 @@ class PantryBloc extends Bloc<PantryEvent, PantryState> {
           ));
         },
             (data) async {
-          print("✅ Pantry repository returned data");
-          print("Data: ${data.toString()}");
 
           emit(state.copyWith(
             pantryStatus: PantryStatus.success,
@@ -57,7 +54,6 @@ class PantryBloc extends Bloc<PantryEvent, PantryState> {
         },
       );
     } catch (e) {
-      print("💥 Pantry BLoC error: $e");
       emit(state.copyWith(
         pantryStatus: PantryStatus.failure,
         failureMessage: "An unexpected error occurred: $e",

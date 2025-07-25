@@ -28,9 +28,6 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         );
 
 
-    print(response.body);
-    print(response.statusCode);
-
     if (response.statusCode == 200 || response.statusCode == 201) {
       return homeFromJson(response.body);
     } else {

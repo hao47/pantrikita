@@ -18,7 +18,6 @@ class RecipeDetailRemoteDataSourceImpl implements RecipeDetailRemoteDataSource {
   Future<RecipeDetail> getRecipeDetail(String recipeId, String token) async {
     final url = Uri.parse('${Api.url}/recipe/$recipeId');
 
-    print("🌐 Making Recipe Detail API call to: $url");
 
     try {
       final response = await client
@@ -29,24 +28,18 @@ class RecipeDetailRemoteDataSourceImpl implements RecipeDetailRemoteDataSource {
           .timeout(
         const Duration(seconds: 15),
         onTimeout: () {
-          print("⏰ Recipe Detail API call timeout after 15 seconds");
           throw const TimeOutException();
         },
       );
 
-      print("📡 Recipe Detail API Response: ${response.statusCode}");
 
       if (response.statusCode == 200) {
-        print(response.body);
         final recipeDetail = recipeDetailFromJson(response.body);
-        print("✅ Successfully parsed recipe detail: ${recipeDetail.data.title}");
         return recipeDetail;
       } else {
-        print("❌ Server returned error: ${response.statusCode}");
         throw const ServerException();
       }
     } catch (e) {
-      print("💥 Recipe Detail DataSource error: $e");
       if (e is TimeOutException) {
         rethrow;
       } else {
@@ -58,7 +51,6 @@ class RecipeDetailRemoteDataSourceImpl implements RecipeDetailRemoteDataSource {
   Future<bool> updateIngredientStatus(String recipeId, String ingredientName, bool isChecked, String token) async {
     final url = Uri.parse('${Api.url}/recipe/$recipeId');
 
-    print("🌐 Making Update Recipe API call to: $url");
     print("📝 Updating ingredient: $ingredientName to isChecked: $isChecked");
 
     try {
@@ -67,7 +59,6 @@ class RecipeDetailRemoteDataSourceImpl implements RecipeDetailRemoteDataSource {
       // where we have access to the current recipe state
       throw UnimplementedError("Use updateRecipeIngredients method instead");
     } catch (e) {
-      print("💥 Update Ingredient DataSource error: $e");
       rethrow;
     }
   }
@@ -76,8 +67,6 @@ class RecipeDetailRemoteDataSourceImpl implements RecipeDetailRemoteDataSource {
   Future<bool> updateRecipeIngredients(String recipeId, List<DetailIngredient> ingredients, String token) async {
     final url = Uri.parse('${Api.url}/recipe/$recipeId');
 
-    print("🌐 Making Update Recipe API call to: $url");
-    print("📝 Updating recipe with ${ingredients.length} ingredients");
 
     try {
       final requestBody = {
@@ -100,22 +89,17 @@ class RecipeDetailRemoteDataSourceImpl implements RecipeDetailRemoteDataSource {
           .timeout(
         const Duration(seconds: 15),
         onTimeout: () {
-          print("⏰ Update Recipe API call timeout after 15 seconds");
           throw const TimeOutException();
         },
       );
 
-      print("📡 Update Recipe API Response: ${response.statusCode}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print("✅ Successfully updated recipe ingredients");
         return true;
       } else {
-        print("❌ Server returned error: ${response.statusCode}");
         throw const ServerException();
       }
     } catch (e) {
-      print("💥 Update Recipe DataSource error: $e");
       if (e is TimeOutException) {
         rethrow;
       } else {

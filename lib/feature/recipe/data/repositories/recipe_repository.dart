@@ -30,25 +30,20 @@ class RecipeRepositoryImpl implements RecipeRepository {
         final box = GetStorage();
         final token = await box.read("user_token");
 
-        print("🌐 Internet available, trying API...");
         final model = await remoteDataSource.getRecipes(token);
 
-        print("✅ API success, saving to cache");
+        print("✅ Recipe API success, saving to cache");
         await box.write("cached_recipes", recipeToJson(model));
 
         return Right(model);
-      } on ServerException catch (e) {
-        print("❌ Server error: $e, trying cache...");
+      } on ServerException {
         return _getCachedData("ServerException");
-      } on TimeOutException catch (e) {
-        print("⏰ Timeout error: $e, trying cache...");
+      } on TimeOutException {
         return _getCachedData("TimeOutException");
       } catch (e) {
-        print("💥 Unknown error: $e, trying cache...");
         return _getCachedData("UnknownException");
       }
     } else {
-      print("📵 No internet, trying cache...");
       return _getCachedData("NetworkFailure");
     }
   }
@@ -60,25 +55,20 @@ class RecipeRepositoryImpl implements RecipeRepository {
         final box = GetStorage();
         final token = await box.read("user_token");
 
-        print("🌐 Internet available, trying API...");
         final model = await remoteDataSource.regenerateRecipes(token);
 
-        print("✅ API success, saving to cache");
+        print("✅ Recipe Regenerate API success, saving to cache");
         await box.write("cached_recipes", recipeToJson(model));
 
         return Right(model);
-      } on ServerException catch (e) {
-        print("❌ Server error: $e, trying cache...");
+      } on ServerException {
         return _getCachedData("ServerException");
-      } on TimeOutException catch (e) {
-        print("⏰ Timeout error: $e, trying cache...");
+      } on TimeOutException {
         return _getCachedData("TimeOutException");
       } catch (e) {
-        print("💥 Unknown error: $e, trying cache...");
         return _getCachedData("UnknownException");
       }
     } else {
-      print("📵 No internet, trying cache...");
       return _getCachedData("NetworkFailure");
     }
   }
@@ -94,7 +84,6 @@ class RecipeRepositoryImpl implements RecipeRepository {
         final cachedRecipes = recipeFromJson(cachedData);
         return Right(cachedRecipes);
       } else {
-        print("❌ No cache available");
 
         switch (errorType) {
           case "NetworkFailure":

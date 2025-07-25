@@ -40,25 +40,20 @@ class PantryDetailRepositoryImpl implements PantryDetailRepository {
         final box = GetStorage();
         final token = await box.read("user_token");
 
-        print("🌐 Internet available, trying Pantry Detail API...");
         final model = await remoteDataSource.getPantryDetail(token, id);
 
         print("✅ Pantry Detail API success, saving to cache");
         await box.write("cached_pantry_detail", pantryDetailToJson(model));
 
         return Right(model);
-      } on ServerException catch (e) {
-        print("❌ Pantry Detail server error: $e, trying cache...");
+      } on ServerException {
         return _getCachedPantryDetailData("ServerException");
-      } on TimeOutException catch (e) {
-        print("⏰ Pantry Detail timeout error: $e, trying cache...");
+      } on TimeOutException {
         return _getCachedPantryDetailData("TimeOutException");
       } catch (e) {
-        print("💥 Pantry Detail unknown error: $e, trying cache...");
         return _getCachedPantryDetailData("UnknownException");
       }
     } else {
-      print("📵 No internet for Pantry Detail, trying cache...");
       return _getCachedPantryDetailData("NetworkFailure");
     }
   }
@@ -73,7 +68,6 @@ class PantryDetailRepositoryImpl implements PantryDetailRepository {
         final cachedPantryDetail = pantryDetailFromJson(cachedData);
         return Right(cachedPantryDetail);
       } else {
-        print("❌ No pantry detail cache available");
 
         switch (errorType) {
           case "NetworkFailure":
@@ -101,24 +95,19 @@ class PantryDetailRepositoryImpl implements PantryDetailRepository {
         final box = GetStorage();
         final token = await box.read("user_token");
 
-        print("🌐 Internet available, trying PUT Pantry Detail API...");
         final response = await remoteDataSource.putPantryDetail(token, id, status);
 
         print("✅ PUT Pantry Detail API success");
 
         return Right(response);
-      } on ServerException catch (e) {
-        print("❌ PUT Pantry Detail server error: $e");
+      } on ServerException {
         return Left(ServerFailure());
-      } on TimeOutException catch (e) {
-        print("⏰ PUT Pantry Detail timeout error: $e");
+      } on TimeOutException {
         return Left(TimeOutFailure());
       } catch (e) {
-        print("💥 PUT Pantry Detail unknown error: $e");
         return Left(ServerFailure());
       }
     } else {
-      print("📵 No internet for PUT Pantry Detail");
       return Left(NetworkFailure());
     }
   }
@@ -132,24 +121,19 @@ class PantryDetailRepositoryImpl implements PantryDetailRepository {
         final box = GetStorage();
         final token = await box.read("user_token");
 
-        print("🌐 Internet available, trying DELETE Pantry Detail API...");
         final response = await remoteDataSource.deletePantryDetail(token, id);
 
         print("✅ DELETE Pantry Detail API success");
 
         return Right(response);
-      } on ServerException catch (e) {
-        print("❌ DELETE Pantry Detail server error: $e");
+      } on ServerException {
         return Left(ServerFailure());
-      } on TimeOutException catch (e) {
-        print("⏰ DELETE Pantry Detail timeout error: $e");
+      } on TimeOutException {
         return Left(TimeOutFailure());
       } catch (e) {
-        print("💥 DELETE Pantry Detail unknown error: $e");
         return Left(ServerFailure());
       }
     } else {
-      print("📵 No internet for DELETE Pantry Detail");
       return Left(NetworkFailure());
     }
   }

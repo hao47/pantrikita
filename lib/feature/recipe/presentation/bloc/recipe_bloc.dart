@@ -29,7 +29,6 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
 
       await either.fold(
             (failure) async {
-          print("❌ Repository returned failure: ${failure.runtimeType}");
 
           emit(RecipeFailure(
             message: mapFailureToMessage(failure),
@@ -43,7 +42,6 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
         },
       );
     } catch (e) {
-      print("💥 BLoC error: $e");
       emit(RecipeFailure(
         message: "An unexpected error occurred: $e",
         failureType: "UnknownFailure",
@@ -62,7 +60,6 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
 
       await either.fold(
             (failure) async {
-          print("❌ Repository returned failure: ${failure.runtimeType}");
 
           emit(RecipeFailure(
             message: mapFailureToMessage(failure),
@@ -76,7 +73,6 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
         },
       );
     } catch (e) {
-      print("💥 BLoC error: $e");
       emit(RecipeFailure(
         message: "An unexpected error occurred: $e",
         failureType: "UnknownFailure",

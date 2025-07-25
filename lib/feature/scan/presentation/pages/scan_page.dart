@@ -49,12 +49,6 @@ class _ScanPageState extends State<ScanPage> {
                         ),
                       ),
 
-                      Text(
-                        "Item Name",
-                        style: tsBodySmallMedium(ColorValue.black),
-                      ),
-                      const SizedBox(height: 10),
-
                       ScanTab(
                         onValueChanged: (v) {
                           print(v);
