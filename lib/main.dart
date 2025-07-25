@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         title: 'PantriKita',
         debugShowCheckedModeBanner: false,
-        home: BottomNavigation(),
+        home: LoginPage(),
       ),
     );
   }
