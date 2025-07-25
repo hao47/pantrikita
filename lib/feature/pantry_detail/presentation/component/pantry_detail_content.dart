@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pantrikita/core/route/navigator.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
 import 'package:pantrikita/feature/pantry_detail/data/domain/entities/pantry_detail.dart';
@@ -42,7 +43,10 @@ class PantryDetailContent extends StatelessWidget {
                   SizedBox(height: 20),
 
                   // * Card Action * //
-                  _cardAction(state.pantryDetailResponse!.data.headerStatus.statusText.toLowerCase()),
+                  _cardAction(
+                      state.pantryDetailResponse!.data.headerStatus.statusText.toLowerCase(),
+                      state.pantryDetailResponse!.data.id.toString()
+                  ),
 
                   SizedBox(height: 20),
 
@@ -61,21 +65,31 @@ class PantryDetailContent extends StatelessWidget {
                   SizedBox(height: 20),
 
                   // * Delete Button * //
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    decoration: BoxDecoration(
-                      color: ColorValue.red,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.delete_outline, color: ColorValue.whiteColor, size: 24),
-                        SizedBox(width: screenWidth * 0.02),
-                        Text('Delete Item', style: tsBodySmallMedium(ColorValue.whiteColor), textAlign: TextAlign.center),
-                      ],
+                  InkWell(
+                    onTap: () {
+                      context.read<PantryDetailBloc>().add(DeletePantryDetailEvent(pantryId: state.pantryDetailResponse!.data.id.toString()));
+                      SnackBar(
+                        content: Text('Item deleted successfully!'),
+                        backgroundColor: ColorValue.red,
+                      );
+                      navigatorPop(context);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      decoration: BoxDecoration(
+                        color: ColorValue.red,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.delete_outline, color: ColorValue.whiteColor, size: 24),
+                          SizedBox(width: screenWidth * 0.02),
+                          Text('Delete Item', style: tsBodySmallMedium(ColorValue.whiteColor), textAlign: TextAlign.center),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -98,11 +112,11 @@ class PantryDetailContent extends StatelessWidget {
     }
   }
 
-  Widget _cardAction(String status) {
+  Widget _cardAction(String status, String pantryId) {
     if (status != 'expired') {
-      return CardActionConsumed();
+      return CardActionConsumed(pantryId: pantryId,);
     } else if (status == 'expired') {
-      return CardActionExpired();
+      return CardActionExpired(pantryId: pantryId,);
     } else {
       return Container();
     }

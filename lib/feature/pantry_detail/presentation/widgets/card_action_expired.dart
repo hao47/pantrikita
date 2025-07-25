@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pantrikita/core/route/navigator.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/bloc/pantry_detail_bloc.dart';
 
 class CardActionExpired extends StatelessWidget {
   CardActionExpired({
     super.key,
+    required this.pantryId,
   });
+
+  final String pantryId;
 
   @override
   Widget build(BuildContext context) {
@@ -50,42 +56,62 @@ class CardActionExpired extends StatelessWidget {
 
               SizedBox(height: 20),
 
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 15),
-                decoration: BoxDecoration(
-                  color: ColorValue.green,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset('assets/svg/plant.svg', width: 24, height: 24),
-                    SizedBox(width: screenWidth * 0.02),
-                    Text('Made Into Compost', style: tsBodySmallMedium(ColorValue.whiteColor), textAlign: TextAlign.center),
-                  ],
+              InkWell(
+                onTap: () {
+                  context.read<PantryDetailBloc>().add(PutPantryDetailEvent(pantryId: pantryId, status: 'compost'));
+                  SnackBar(
+                    content: Text('Item marked as composted successfully!'),
+                    backgroundColor: ColorValue.green,
+                  );
+                  navigatorPop(context);
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  decoration: BoxDecoration(
+                    color: ColorValue.green,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset('assets/svg/plant.svg', width: 24, height: 24),
+                      SizedBox(width: screenWidth * 0.02),
+                      Text('Made Into Compost', style: tsBodySmallMedium(ColorValue.whiteColor), textAlign: TextAlign.center),
+                    ],
+                  ),
                 ),
               ),
 
               SizedBox(height: 10),
 
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 15),
-                decoration: BoxDecoration(
-                  color: ColorValue.whiteColor,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: ColorValue.red, width: 1)
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.highlight_remove, color: ColorValue.red, size: 24),
-                    SizedBox(width: screenWidth * 0.02),
-                    Text('Thrown Away', style: tsBodySmallMedium(ColorValue.red), textAlign: TextAlign.center),
-                  ],
+              InkWell(
+                onTap: () {
+                  context.read<PantryDetailBloc>().add(PutPantryDetailEvent(pantryId: pantryId, status: 'thrown'));
+                  SnackBar(
+                    content: Text('Item marked as thrown away successfully!'),
+                    backgroundColor: ColorValue.red,
+                  );
+                  navigatorPop(context);
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  decoration: BoxDecoration(
+                    color: ColorValue.whiteColor,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: ColorValue.red, width: 1)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.highlight_remove, color: ColorValue.red, size: 24),
+                      SizedBox(width: screenWidth * 0.02),
+                      Text('Thrown Away', style: tsBodySmallMedium(ColorValue.red), textAlign: TextAlign.center),
+                    ],
+                  ),
                 ),
               ),
             ]

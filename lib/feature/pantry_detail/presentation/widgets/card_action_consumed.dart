@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pantrikita/core/route/navigator.dart';
 import 'package:pantrikita/core/theme/color_value.dart';
 import 'package:pantrikita/core/theme/text_style.dart';
+import 'package:pantrikita/feature/pantry_detail/presentation/bloc/pantry_detail_bloc.dart';
 
 class CardActionConsumed extends StatelessWidget {
   CardActionConsumed({
     super.key,
+    required this.pantryId,
   });
+
+  final String pantryId;
 
   @override
   Widget build(BuildContext context) {
@@ -49,21 +55,31 @@ class CardActionConsumed extends StatelessWidget {
 
               SizedBox(height: 20),
 
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 15),
-                decoration: BoxDecoration(
-                  color: ColorValue.primary,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.check_circle_outline, color: ColorValue.whiteColor, size: 24),
-                    SizedBox(width: screenWidth * 0.02),
-                    Text('Mark as Consumed', style: tsBodySmallMedium(ColorValue.whiteColor), textAlign: TextAlign.center),
-                  ],
+              InkWell(
+                onTap: () {
+                  context.read<PantryDetailBloc>().add(PutPantryDetailEvent(pantryId: pantryId, status: 'consumed'));
+                  SnackBar(
+                    content: Text('Item marked as consumed successfully!'),
+                    backgroundColor: ColorValue.green,
+                  );
+                  navigatorPop(context);
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  decoration: BoxDecoration(
+                    color: ColorValue.primary,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.check_circle_outline, color: ColorValue.whiteColor, size: 24),
+                      SizedBox(width: screenWidth * 0.02),
+                      Text('Mark as Consumed', style: tsBodySmallMedium(ColorValue.whiteColor), textAlign: TextAlign.center),
+                    ],
+                  ),
                 ),
               ),
             ]

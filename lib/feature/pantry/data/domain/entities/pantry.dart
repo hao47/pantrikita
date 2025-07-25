@@ -50,8 +50,8 @@ class Item {
   String location;
   String status;
   String category;
-  String icon;
   Expired expired;
+  String? icon;
 
   Item({
     required this.id,
@@ -59,8 +59,8 @@ class Item {
     required this.location,
     required this.status,
     required this.category,
-    required this.icon,
     required this.expired,
+    this.icon,
   });
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
@@ -69,8 +69,8 @@ class Item {
     location: json["location"],
     status: json["status"],
     category: json["category"],
-    icon: json["icon"],
     expired: Expired.fromJson(json["expired"]),
+    icon: json["icon"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -79,8 +79,8 @@ class Item {
     "location": location,
     "status": status,
     "category": category,
-    "icon": icon,
     "expired": expired.toJson(),
+    "icon": icon,
   };
 }
 

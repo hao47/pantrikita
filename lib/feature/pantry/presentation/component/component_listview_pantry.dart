@@ -37,7 +37,7 @@ class ComponentListviewPantry extends StatelessWidget {
               textCategory: item.category,
               textLocation: item.location,
               textStatus: item.expired.statusText,
-              icon: item.icon,
+              icon: item.icon ?? '❓',
               status: item.expired.statusColor,
             ),
           ),
