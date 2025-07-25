@@ -26,7 +26,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       GetHomeEvent event,
       Emitter<HomeState> emit,
       ) async {
-    try {
+
       emit(HomeLoading());
 
       final either = await _repository.getHome();
@@ -46,12 +46,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           ));
         },
       );
-    } catch (e) {
-      emit(HomeFailure(
-        message: "An unexpected error occurred: $e",
-        failureType: "UnknownFailure",
-      ));
-    }
+
   }
 
 

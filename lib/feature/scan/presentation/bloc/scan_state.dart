@@ -5,7 +5,7 @@ enum IdentifyStatus { initial, loading, success, error }
 
 class ScanState extends Equatable {
   const ScanState({
-    this.change_tab_index = 0,
+    this.change_tab_index = 1,
     this.category_id = 1,
     this.scanStatus = ScanStatus.initial,
     this.identifyStatus = IdentifyStatus.initial,

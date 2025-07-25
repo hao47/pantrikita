@@ -31,6 +31,8 @@ class _HomePageState extends State<HomePage>
         backgroundColor: const Color(0xFFF5F5F5), // ColorValue.backgroundColor
         body: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
+
+            print(state);
             if (state is HomeLoading) {
               return CustomLoading();
             } else if (state is HomeSuccess) {
