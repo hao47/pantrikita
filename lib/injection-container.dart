@@ -6,6 +6,8 @@ import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pantrikita/feature/auth/data/data_sources/remote/auth_remote_data_sources.dart';
 import 'package:pantrikita/feature/auth/data/data_sources/repository/auth_repository.dart';
+import 'package:pantrikita/feature/pantry/data/data_sources/remote/pantry_remote_data_sources.dart';
+import 'package:pantrikita/feature/pantry/data/data_sources/repositories/pantry_repository.dart';
 
 import 'core/util/local/local_storage.dart';
 import 'core/util/network/network_info.dart';
@@ -110,7 +112,25 @@ void _initializeProfileFeature() {
 void _initializePantryFeature() {
   // bloc
   sl.registerFactory(
-        () => PantryBloc(),
+        () => PantryBloc(
+      repository: sl(),
+    ),
+  );
+
+  // data sources
+  sl.registerLazySingleton<PantryRemoteDataSource>(
+        () => PantryRemoteDataSourceImpl(
+      client: sl(),
+    ),
+  );
+
+  // repository
+  sl.registerLazySingleton<PantryRepository>(
+        () => PantryRepositoryImpl(
+      remoteDataSource: sl(),
+      networkInfo: sl(),
+      localStorage: sl(),
+    ),
   );
 }
 
